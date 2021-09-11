@@ -11,6 +11,8 @@
 # Run artisan commands
 #php /var/www/html/artisan migrate permissions
 
+cd /var/www/html/
+
 #Start up docker
 sudo docker-compose up
 
@@ -18,6 +20,6 @@ sudo docker-compose up
 sudo docker-compose exec audit sh
 
 #migrate
-php /var/www/html/artisan migrate -f
+php artisan migrate -f
 
 
