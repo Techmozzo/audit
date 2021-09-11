@@ -18,6 +18,6 @@ sudo docker-compose up
 sudo docker-compose exec audit sh
 
 #migrate
-sudo php artisan migrate
+php /var/www/html/artisan migrate -f
 
 
