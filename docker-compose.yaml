@@ -14,7 +14,7 @@ services:
 
   audit_queue:
     build:
-      context: /var/www/html
+      context: .
       dockerfile: Dockerfile
     command: 'php artisan serve queue:work'
     depends_on:
@@ -31,6 +31,7 @@ services:
       - ./storage/dbdata:/var/lib/mysql
     ports:
       - 33063:3306
+    command: echo .
 
 
   phpmyadmin:
