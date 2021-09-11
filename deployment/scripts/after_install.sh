@@ -12,12 +12,12 @@
 #php /var/www/html/artisan migrate permissions
 
 #Start up docker
-sudo docker compose up
+sudo docker-compose up
 
 #Enter docker execution shell
-docker compose exec audit sh
+sudo docker-compose exec audit sh
 
 #migrate
-php artisan migrate
+sudo php artisan migrate
 
 
