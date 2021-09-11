@@ -22,5 +22,5 @@ graphviz \
 --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /app
-COPY /var/www/html/ .
+COPY . .
 RUN composer install
