@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'composer dump-autoload && php artisan queue:work'
+    command: 'php artisan queue:work'
     depends_on:
       - audit_db
 
