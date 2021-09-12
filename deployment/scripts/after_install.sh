@@ -7,6 +7,9 @@
 #
 # Run composer
 #sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter$
+apt-get install -y curl -sS https://getcomposer.org/installer | php -- \
+--install-dir=/usr/local/bin --filename=composer
+
 #
 # Run artisan commands
 #php /var/www/html/artisan migrate permissions
