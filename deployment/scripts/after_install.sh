@@ -19,9 +19,9 @@ composer dump-autoload -o
 sudo docker-compose up
 
 #Enter docker execution shell
-sudo docker-compose exec audit sh
+#sudo docker-compose exec audit sh
 
 #migrate
-php artisan migrate -f
+#php artisan migrate -f
 
 
