@@ -10,7 +10,7 @@
 #
 # Run artisan commands
 #php /var/www/html/artisan migrate permissions
-cd var/www/html/
+cd /var/www/html/
 
 #Start up docker
 sudo docker-compose up
