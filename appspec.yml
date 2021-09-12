@@ -34,7 +34,7 @@ hooks:
   AfterInstall:
     - location: deployment/scripts/after_install.sh
       timeout: 300
-      runas: ubuntu
+      runas: root
 #  ApplicationStart:
 #    - location: deployment/scripts/application_start.sh
 #      timeout: 300
@@ -43,3 +43,4 @@ hooks:
 #    - location: deployment/scripts/validate_service.sh
 #      timeout: 300
 #      runas: forge
+
