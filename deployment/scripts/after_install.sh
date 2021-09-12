@@ -3,7 +3,7 @@
 sudo chmod -R 0777 /var/www/html/storage
 sudo chmod -R 0777 /var/www/html/bootstrap/cache
 #
-#cd /var/www/html
+cd /var/www/html
 #
 # Run composer
 sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
