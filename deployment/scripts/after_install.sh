@@ -8,7 +8,7 @@ cd /var/www/html
 # Run composer
 #sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
 
-composer install --no-script
+#/usr/bin/composer.phar install --no-script
 
 #
 # Run artisan commands
