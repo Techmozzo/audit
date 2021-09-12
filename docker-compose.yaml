@@ -3,11 +3,11 @@ services:
   audit:
     build:
 #      context: .
-      context: /app
+      context: ./app
       dockerfile: Dockerfile
     command: 'php artisan serve --host=0.0.0.0'
     volumes:
-      - .:/app
+      - .:./app
 #      - ./:/app
     ports:
       - 8000:8000
