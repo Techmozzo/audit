@@ -7,8 +7,7 @@ cd /var/www/html
 #
 # Run composer
 #sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
-curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/local/bin --filename=composer
+
 composer install --no-script
 
 #
