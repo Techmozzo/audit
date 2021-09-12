@@ -12,7 +12,7 @@
 #php /var/www/html/artisan migrate permissions
 
 
-cd /var/www/html/
+sudo cd /var/www/html/
 
 
 #Start up docker

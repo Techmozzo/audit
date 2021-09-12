@@ -1,9 +1,9 @@
 version: '3.8'
 services:
   audit:
-    build: Dockerfile
-#      context: .
-#      dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: 'php artisan serve --host=0.0.0.0'
     volumes:
       - .:/app
@@ -13,9 +13,9 @@ services:
       - audit_db
 
   audit_queue:
-    build: Dockerfile
-#      context: .
-#      dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: 'php artisan serve queue:work'
     depends_on:
       - audit_db
