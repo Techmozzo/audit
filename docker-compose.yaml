@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "composer dump-autoload -o && php artisan serve --host=0.0.0.0"
+    command: bash -c "composer dump-autoload -o && composer update --no-scripts && php artisan serve --host=0.0.0.0"
     volumes:
       - .:/app
     ports:
@@ -21,7 +21,7 @@ services:
       - audit_db
 
   audit_db:
-    image: mysql
+    image: mysql:8.0.12
     environment:
       MYSQL_DATABASE: admin
       MYSQL_USER: root
