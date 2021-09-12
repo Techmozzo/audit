@@ -6,12 +6,12 @@ sudo chmod -R 0777 /var/www/html/bootstrap/cache
 #cd /var/www/html
 #
 # Run composer
-#sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
+sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
 
 #
 # Run artisan commands
 #php /var/www/html/artisan migrate permissions
-cd /var/www/html/
+#cd /var/www/html/
 
 #Start up docker
 sudo docker-compose up

@@ -18,9 +18,9 @@ graphviz \
 &&  docker-php-ext-install -j5 mbstring mysqli zip pdo pdo_mysql shmop sockets bcmath \
 &&  docker-php-ext-configure zip \
 &&  docker-php-source delete \
-&& curl -sS https://getcomposer.org/installer | php -- \
---install-dir=/usr/local/bin --filename=composer
+#&& curl -sS https://getcomposer.org/installer | php -- \
+#--install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /app
 COPY . .
-RUN composer install
+#RUN composer install
