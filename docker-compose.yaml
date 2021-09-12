@@ -1,16 +1,16 @@
 version: '3.8'
 services:
-#  audit:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    command: 'php artisan serve --host=0.0.0.0'
-#    volumes:
-#      - .:/app
-#    ports:
-#      - 8000:8000
-#    depends_on:
-#      - audit_db
+  audit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "composer dump-autoload -o && php artisan serve --host=0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - audit_db
 
   audit_queue:
     build:
@@ -21,7 +21,7 @@ services:
       - audit_db
 
   audit_db:
-    image: mysql:8.0.12
+    image: mysql
     environment:
       MYSQL_DATABASE: admin
       MYSQL_USER: root

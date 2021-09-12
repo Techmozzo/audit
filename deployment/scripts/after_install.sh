@@ -13,15 +13,13 @@
 #php /var/www/html/artisan migrate permissions
 cd /var/www/html/
 
-composer dump-autoload -o
-
 #Start up docker
 sudo docker-compose up
 
 #Enter docker execution shell
-#sudo docker-compose exec audit sh
+sudo docker-compose exec audit sh
 
 #migrate
-#php artisan migrate -f
+php artisan migrate -f
 
 
