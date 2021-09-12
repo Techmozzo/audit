@@ -14,7 +14,7 @@ services:
 
   audit_queue:
     build:
-      context: .
+      context: /var/www/html
       dockerfile: Dockerfile
     command: 'php artisan serve queue:work'
     depends_on:
