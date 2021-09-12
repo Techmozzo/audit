@@ -5,7 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
       command: "php artisan serve --host=0.0.0.0"
-
     #    command: bash -c "composer dump-autoload -o && composer update --no-scripts && php artisan serve --host=0.0.0.0"
     volumes:
       - .:/app

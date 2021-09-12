@@ -6,7 +6,10 @@ sudo chmod -R 0777 /var/www/html/bootstrap/cache
 cd /var/www/html
 #
 # Run composer
-sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
+#sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
+apt-get update && apt-get install -y curl -sS https://getcomposer.org/installer | php -- \
+--install-dir=/usr/local/bin --filename=composer
+composer install --no-script
 
 #
 # Run artisan commands
