@@ -13,6 +13,8 @@
 #php /var/www/html/artisan migrate permissions
 cd /var/www/html/
 
+composer dump-autoload -o
+
 #Start up docker
 sudo docker-compose up
 
