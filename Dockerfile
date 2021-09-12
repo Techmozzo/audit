@@ -23,4 +23,4 @@ graphviz \
 
 WORKDIR /app
 COPY . .
-RUN composer install --no-script
+RUN composer install
