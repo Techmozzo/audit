@@ -1,8 +1,8 @@
 version: '3.8'
 services:
   audit:
-    build:
-      context: .
+    build: .
+#      context: .
 #      dockerfile: Dockerfile
     command: 'php artisan serve --host=0.0.0.0'
     volumes:
@@ -13,9 +13,9 @@ services:
       - audit_db
 
   audit_queue:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+#      context: .
+#      dockerfile: Dockerfile
     command: 'php artisan serve queue:work'
     depends_on:
       - audit_db
@@ -31,8 +31,6 @@ services:
       - ./storage/dbdata:/var/lib/mysql
     ports:
       - 33063:3306
-    command: echo .
-
 
   phpmyadmin:
     image: phpmyadmin

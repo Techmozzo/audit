@@ -11,7 +11,6 @@
 # Run artisan commands
 #php /var/www/html/artisan migrate permissions
 
-sudo chmod -R 0777 /var/www/
 
 cd /var/www/html/
 
