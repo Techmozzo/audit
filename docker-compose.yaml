@@ -15,13 +15,18 @@ services:
       - audit_db
 
   audit_queue:
-    build:
+#    build:
 #      context: .
-      context: /app
-      dockerfile: Dockerfile
-    command: 'php artisan serve queue:work'
-    depends_on:
-      - audit_db
+#      dockerfile: Dockerfile
+#    command: 'php artisan queue:work'
+#    depends_on:
+#      - audit_db
+
+    restart: always
+    image: php-laravel:latest
+    command: 'php artisan queue:work'
+    volumes:
+      - ./src:/var/www/html/
 
   audit_db:
     image: mysql:8.0.12
