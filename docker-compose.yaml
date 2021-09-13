@@ -9,33 +9,33 @@ services:
       - .:/app
     ports:
       - 8000:8000
-    depends_on:
-      - audit_db
+#    depends_on:
+#      - audit_db
 
   audit_queue:
     build:
       context: .
       dockerfile: Dockerfile
     command: 'php artisan queue:work'
-    depends_on:
-      - audit_db
+#    depends_on:
+#      - audit_db
 
-  audit_db:
-    image: mysql
-    environment:
-      MYSQL_DATABASE: admin
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-    volumes:
-      - ./storage/dbdata:/var/lib/mysql
-    ports:
-      - 33063:3306
-
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
+#  audit_db:
+#    image: mysql
+#    environment:
+#      MYSQL_DATABASE: admin
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    volumes:
+#      - ./storage/dbdata:/var/lib/mysql
+#    ports:
+#      - 33063:3306
+#
+#  phpmyadmin:
+#    image: phpmyadmin
+#    restart: always
+#    ports:
+#      - 8080:80
+#    environment:
+#      - PMA_ARBITRARY=1
