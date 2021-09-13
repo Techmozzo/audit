@@ -21,7 +21,7 @@ services:
       - audit_db
 
   audit_db:
-    image: mysql:8.0.12
+    image: mysql:5.7
     environment:
       MYSQL_DATABASE: admin
       MYSQL_USER: root
