@@ -22,7 +22,7 @@ services:
       - audit_db
 
   audit_db:
-    image: laradock/mysql:latest
+    image: mysql:latest
 #    image: mysql
     environment:
       MYSQL_DATABASE: admin
