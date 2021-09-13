@@ -4,7 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "composer install && php artisan serve --host=0.0.0.0"
+    command: bash -c "composer install && php artisan serve --host=0.0.0.0 && sudo chmod -R 0777 /var/www/html/storage
+      && sudo chmod -R 0777 /var/www/html/bootstrap/cache"
     volumes:
       - .:/app
     ports:
@@ -21,6 +22,8 @@ services:
 #      - audit_db
 
 #  audit_db:
+#    image: laradock/mysql:latest
+
 #    image: mysql
 #    environment:
 #      MYSQL_DATABASE: admin
