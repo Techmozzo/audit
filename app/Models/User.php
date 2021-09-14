@@ -19,31 +19,8 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'password', 'designation', 'is_verified', 'company_id', 'role_id'];
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -63,5 +40,17 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function hasRole($role){
+        return null !== $this->role()->where('name', $role)->first();
+    }
+
+    public function fullName(){
+        return $this->firstname . ' ' . $this->lastname;
     }
 }
