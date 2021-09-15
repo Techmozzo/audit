@@ -29,3 +29,5 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::patch('reset-password', ResetPasswordController::class);
 });
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

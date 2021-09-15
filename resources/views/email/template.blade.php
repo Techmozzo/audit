@@ -209,7 +209,7 @@
                                                     <td align="center" class="footer" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                                         <div style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:center;color:#000000;">
                                                             <mj-text font-family="Roboto">
-                                                                <a href="tel:+2348105094729" style="display:inline;text-decoration:none;color:#000000"> Tel: +234 810 509 4729 </a>
+                                                                <a href="tel:+2348105094729" style="display:inline;text-decoration:none;color:#000000"> Tel: +234 810 000 2658 </a>
                                                             </mj-text>
                                                             <mj-text> &nbsp; </mj-text>
                                                             <mj-text font-family="Roboto">
