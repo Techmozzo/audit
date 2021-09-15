@@ -21,7 +21,7 @@ class LoginController extends Controller
         }
 
         $data = [
-            'access_token' => auth()->attempt(['email'=>$user->email, 'password'=>$user->password]),
+            'access_token' => auth()->guard()->login($user),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => new UserResource($user)

@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
+
 
 
 /*
@@ -21,4 +25,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', LoginController::class );
     Route::post('logout', LogoutController::class);
     Route::post('register', RegisterController::class);
+    Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
+    Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::patch('reset-password', ResetPasswordController::class);
 });

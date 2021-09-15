@@ -7,7 +7,6 @@ use App\Http\Requests\RegistrationRequest;
 use App\Http\Resources\UserResource;
 use App\Jobs\RegistrationJob;
 use App\Jobs\RegistrationJobAdmin;
-use App\Jobs\TestJob;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
