@@ -30,13 +30,6 @@ class Registration
         RegistrationJobAdmin::dispatch($user, 'admin@techmozzo.com')->onQueue('audit_queue');
         InvitationJob::dispatchIf($request->email !== $request->managing_partner_email, $request->all(), 'Managing Partner')->onQueue('audit_queue');
 
-        $data = [
-            'access_token' => auth()->guard()->login($user),
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => new UserResource($user)
-        ];
-
-        return $data;
+        return $user;
     }
 }
