@@ -26,6 +26,7 @@ class UserInvitationController extends Controller
         return response()->success(Response::HTTP_CREATED, 'Invitation sent successful', ['invitedUser' => $invitedUser]);
     }
 
+
     public function registerInvitedUser(RegisterUserRequest $request, $token, CreateUser $createUser){
         $token = $this->decrypt($token);
         $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');
@@ -34,7 +35,7 @@ class UserInvitationController extends Controller
             $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invitation does not exist.');
             if($invitedUser !== null){
                 $user = $createUser($invitedUser->company_id, $request->all());
-                $user->role()->attach($invitedUser->role_id);
+                $user->role()->attach($invitedUser->role_id, ['created_at' => now(), 'updated_at' => now()]);
                 $invitedUser->update(['status' => 1]);
                 $data = [
                     'access_token' => auth()->guard()->login($user),
