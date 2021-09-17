@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -60,6 +61,8 @@ class Handler extends ExceptionHandler
             } elseif ($exception instanceof JWTException) {
                 return response()->error(Response::HTTP_UNAUTHORIZED, 'Issues with Token');
             } elseif ($exception instanceof AuthorizationException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }elseif ($exception instanceof AccessDeniedHttpException){
                 return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
             }
         });

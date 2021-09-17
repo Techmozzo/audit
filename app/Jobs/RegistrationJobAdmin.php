@@ -36,8 +36,8 @@ class RegistrationJobAdmin implements ShouldQueue
      */
     public function handle()
     {
-        $subject = 'New user on Techmozzo Audit Portal';
-        $heading = $this->user->fullName() . ' registered on Facility Portal';
+        $subject = 'New user on Techmozzo Audit Platform';
+        $heading = $this->user->fullName() . ' registered on Audit Platform';
         $body = "This is to inform you of a new registration on the facility portal.
                             <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks";
         Mail::to($this->email)->send(new SendEmail('Admin', $subject, $heading, $body));

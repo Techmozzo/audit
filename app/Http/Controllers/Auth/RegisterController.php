@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    public function __invoke(RegistrationRequest $request, Registration $register){
-        $user = $register($request, new CreateUser());
+    public function __invoke(RegistrationRequest $request, Registration $register, CreateUser $createUser){
+        $user = $register($request, $createUser);
         $data = [
             'access_token' => auth()->guard()->login($user),
             'token_type' => 'bearer',

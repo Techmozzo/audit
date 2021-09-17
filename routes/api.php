@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\UserInvitationController;
 
 
 
@@ -28,6 +29,9 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::patch('reset-password', ResetPasswordController::class);
+    Route::post('users/invite', [UserInvitationController::class, 'sendInvite']);
+    Route::post('users/register/{token}', [UserInvitationController::class, 'registerInvitedUser']);
+
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
