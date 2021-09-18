@@ -1,8 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\UserInvitationController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +22,16 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function ($router) {
-
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', LoginController::class );
+    Route::post('logout', LogoutController::class);
+    Route::post('register', RegisterController::class);
+    Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
+    Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::patch('reset-password', ResetPasswordController::class);
+    Route::post('users/invite', [UserInvitationController::class, 'sendInvite']);
+    Route::post('users/register/{token}', [UserInvitationController::class, 'registerInvitedUser']);
 
 });
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

@@ -2,8 +2,16 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +44,27 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (\Exception $exception) {
+            if ($exception instanceof NotFoundHttpException) {
+                return response()->error(Response::HTTP_NOT_FOUND, 'Route not found');
+            } elseif ($exception instanceof TokenExpiredException) {
+                $data = [
+                    'access_token' => JWTAuth::parseToken()->refresh(),
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->factory()->getTTL() * 60
+                ];
+                return response()->success(Response::HTTP_RESET_CONTENT, 'Token expired', $data);
+            } elseif ($exception instanceof TokenInvalidException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Token is invalid');
+            } elseif ($exception instanceof JWTException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Issues with Token');
+            } elseif ($exception instanceof AuthorizationException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }elseif ($exception instanceof AccessDeniedHttpException){
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }
         });
     }
 }
