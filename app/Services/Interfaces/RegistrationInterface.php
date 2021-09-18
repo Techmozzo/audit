@@ -6,5 +6,5 @@ namespace App\Services\Interfaces;
 
 interface RegistrationInterface
 {
-    public function register($createUser, $request):object;
+    public function execute(array $request):array;
 }
