@@ -59,7 +59,7 @@ class UserRoleController extends Controller
     }
 
     public function userRole(){
-        $user = auth()->user()->with('role:id,name,description')->get();
-        return response()->success(Response::HTTP_OK, 'Request Successful', ['user' => $user]);
+        $roles = auth()->user()->role()->get(['name','description']);
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['roles' => $roles]);
     }
 }
