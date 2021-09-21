@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserInvitationController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserRoleController;
 
 
 
@@ -31,7 +33,21 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::patch('reset-password', ResetPasswordController::class);
     Route::post('users/invite', [UserInvitationController::class, 'sendInvite']);
     Route::post('users/register/{token}', [UserInvitationController::class, 'registerInvitedUser']);
-
 });
+
+
+Route::group(['middleware' => 'admin'], function (){
+    //Roles
+    Route::get('roles', [RoleController::class, 'index']);
+
+    //Permission management
+    Route::get('users-role', [UserRoleController::class, 'companyUsersRole']);
+    Route::post('assign-role', [UserRoleController::class, 'assignRoleToUser']);
+    Route::post('remove-role', [UserRoleController::class, 'removeRoleFromUser']);
+});
+
+//Permission management
+Route::get('user-role', [UserRoleController::class, 'userRole']);
+
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

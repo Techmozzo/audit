@@ -12,10 +12,11 @@ class Company extends Model
 
     protected $fillable = [
         'name', 'email', 'phone', 'dp', 'address', 'city', 'state', 'country', 'zip',
-        'number_of_partners', 'number_of_clients', 'number_of_staff', 'is_verified', 'techmozzo_id'
+        'number_of_partners', 'number_of_clients', 'number_of_users', 'is_verified', 'techmozzo_id'
     ];
 
-    public function staff(){
+    public function users(): object
+    {
         return $this->hasMany(User::class);
     }
 

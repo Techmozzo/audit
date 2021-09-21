@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\CreateUser;
-use \App\Services\Concretes\Registration;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Services\Interfaces\RegistrationInterface;
