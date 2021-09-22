@@ -13,6 +13,8 @@ class UserController extends Controller
     }
 
     public function update(Request $request){
-
+        $user = auth()->user();
+        $user->update($request->except(['email', 'phone', 'company_id', 'is_verified']));
+        return response()->success(Response::HTTP_ACCEPTED, 'Update Successful', ['user' => $user]);
     }
 }
