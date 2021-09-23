@@ -22,7 +22,7 @@ class LoginRequest extends ParentRequest
     public function rules()
     {
         return [
-            'email_or_phone' => 'required|email',
+            'email_or_phone' => 'required|string',
             'password' => 'required'
         ];
     }
