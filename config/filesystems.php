@@ -48,10 +48,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'AKIAJ4U6HHMJJQOUF6IA',
-            'secret' => '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',
-            'region' => 'us-west-2',
-            'bucket' => 'doctoora-profs-docs',
+            'key' => '',
+            'secret' => '',
+            'region' => '',
+            'bucket' => '',
             'visibility' => 'public',
         ],
 
@@ -68,7 +68,7 @@ return [
     |
     */
 
-    's3url' => 'https://doctoora-profs-docs.s3.amazonaws.com/',
+    's3url' => '',
 
 
 //
