@@ -44,12 +44,14 @@ class Registration implements RegistrationInterface
 
     protected function createCompany($request): object
     {
-        return Company::create([
-            'name' => $request['company_name'],
-            'email' => $request['company_email'],
-            'phone' => $request['company_phone'],
-            'techmozzo_id' => 'TM' . rand(100, 999) . rand(1000, 9999) . 'AT'
-        ]);
+        $company = new Company();
+        $company->name = $request['company_name'];
+        $company->email = $request['company_email'];
+        $company->phone = $request['company_phone'];
+        $company->techmozzo_id = 'TM' . rand(100, 999) . rand(1000, 9999) . 'AT';
+        $company->save();
+
+        return $company;
     }
 
 

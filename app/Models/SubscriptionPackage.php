@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class SubscriptionPackage extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['pivot'];
+    public function getFeatureAttribute($value){
+        return json_decode($value);
+    }
 }

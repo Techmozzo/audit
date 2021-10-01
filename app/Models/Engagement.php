@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Engagement extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['pivot'];
+    protected $fillable = [ 'company_id', 'client_id', 'year', 'first_time', 'audit_id'];
 }

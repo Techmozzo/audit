@@ -14,7 +14,11 @@
         "laravel/tinker": "^2.5",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "tymon/jwt-auth": "^1.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.3"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.3",
+        "ext-json": "*",
+        "league/flysystem-aws-s3-v3": "^1.0"
+
+
     },
     "require-dev": {
         "facade/ignition": "^2.5",

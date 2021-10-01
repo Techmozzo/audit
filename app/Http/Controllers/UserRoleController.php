@@ -2,63 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserRole;
-use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest;
+use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserRoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function index()
+    public function companyUsersRole()
     {
-        //
+        $users = User::with('role:id,name,description')->where('company_id', auth()->user()->company_id)
+            ->select('id', 'first_name', 'last_name', 'email', 'phone', 'designation', 'is_verified', 'company_id')->get();
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['users' => $users]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param RoleRequest $request
+     * @return mixed
      */
-    public function store(Request $request)
+    public function assignRoleToUser(RoleRequest $request)
     {
-        //
+        $response = response()->error(Response::HTTP_NOT_FOUND, 'User does not exist');
+            $user = User::where([['id', $request->user_id],['company_id', auth()->user()->company_id]])->first();
+            if($user !== null){
+                $existingRoles = $user->role()->pluck('role_id')->toArray();
+                foreach ($request->role_id as $newRole){
+                    if(!in_array($newRole, $existingRoles)){
+                        $user->role()->attach($newRole, ['created_at' => now(), 'updated_at' => now()]);
+                    }
+                }
+                $response = response()->success(Response::HTTP_OK, 'Role(s) assigned successful');
+            }
+        return $response;
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserRole  $userRole
-     * @return \Illuminate\Http\Response
+     * @param RoleRequest $request
+     * @return mixed
      */
-    public function show(UserRole $userRole)
+    public function removeRoleFromUser(RoleRequest $request)
     {
-        //
+        $response = response()->error(Response::HTTP_NOT_FOUND, 'User does not exist');
+        $user = User::where([['id', $request->user_id],['company_id', auth()->user()->company_id]])->first();
+        if($user !== null){
+            $existingRoles = $user->role()->pluck('role_id')->toArray();
+            foreach ($request->role_id as $roleToRemove){
+                if(in_array($roleToRemove, $existingRoles)){
+                    $user->role()->detach($roleToRemove, ['created_at' => now(), 'updated_at' => now()]);
+                }
+            }
+            $response = response()->success(Response::HTTP_OK, 'Role(s) removed successful');
+        }
+        return $response;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserRole  $userRole
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserRole $userRole)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\UserRole  $userRole
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserRole $userRole)
-    {
-        //
+    public function userRole(){
+        $roles = auth()->user()->role()->get(['name','description']);
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['roles' => $roles]);
     }
 }

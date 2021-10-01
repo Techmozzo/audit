@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class LoginRequest extends ParentRequest
+use Illuminate\Support\Facades\Gate;
+
+class RoleRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -11,7 +13,7 @@ class LoginRequest extends ParentRequest
      */
     public function authorize()
     {
-        return auth()->guest();
+        return Gate::allows('admin');
     }
 
     /**
@@ -22,8 +24,9 @@ class LoginRequest extends ParentRequest
     public function rules()
     {
         return [
-            'email_or_phone' => 'required|string',
-            'password' => 'required'
+            'role_id' => 'required|array',
+            'role_id.*' => 'required|integer|distinct',
+            'user_id' => 'required|integer'
         ];
     }
 }
