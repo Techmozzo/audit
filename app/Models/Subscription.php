@@ -13,6 +13,6 @@ class Subscription extends Model
 
     public function package(): object
     {
-        return $this->belongsTo(SubscriptionPackage::class, 'subscription_package_id')->select('name','feature');
+        return $this->belongsTo(SubscriptionPackage::class, 'subscription_package_id')->select('name','feature','description');
     }
 }

@@ -15,6 +15,10 @@ return [
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
 
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -44,13 +48,11 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'key' => 'AKIAJ4U6HHMJJQOUF6IA',
+            'secret' => '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',
+            'region' => 'us-west-2',
+            'bucket' => 'doctoora-profs-docs',
+            'visibility' => 'public',
         ],
 
     ],
@@ -66,8 +68,12 @@ return [
     |
     */
 
-    'links' => [
-        public_path('storage') => storage_path('app/public'),
-    ],
+    's3url' => 'https://doctoora-profs-docs.s3.amazonaws.com/',
+
+
+//
+//    'links' => [
+//        public_path('storage') => storage_path('app/public'),
+//    ],
 
 ];

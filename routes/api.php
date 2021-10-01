@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubscriptionPackageController;
 use App\Http\Controllers\SubscriptionRecordController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\CompanyController;
 
 
 
@@ -54,13 +55,19 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('subscriptions', SubscriptionRecordController::class);
     Route::post('subscriptions', SubscriptionController::class);
 
+    Route::get('company', [CompanyController::class, 'profile']);
+    Route::post('company', [CompanyController::class, 'update']);
+
+
 });
 
 Route::group(['middleware' => 'user'], function () {
     //Permission management
-    Route::get('user/role', [UserRoleController::class, 'userRole']);
+    Route::post('user', [UserRoleController::class, 'userRole']);
     //User
-    Route::get('user/profile', [UserController::class, 'profile']);
+    Route::get('user', [UserController::class, 'profile']);
+    //User
+    Route::post('user', [UserController::class, 'update']);
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
