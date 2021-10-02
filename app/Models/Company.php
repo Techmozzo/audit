@@ -29,4 +29,14 @@ class Company extends Model
         return $this->hasMany(SubscriptionRecord::class);
     }
 
+    public function client(): object
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function engagement(): object
+    {
+        return $this->belongsTo(Engagement::class);
+    }
+
 }

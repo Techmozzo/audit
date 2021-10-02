@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,42 +16,50 @@ class ClientController extends Controller
      */
     public function index()
     {
-        // $clients = Client::where('company_id', auth()->user()->company_id)->get();
-        // return response()->success(Response::HTTP_OK, 'Request successful'));
+        $clients = Client::where('company_id', auth()->user()->company_id)->get();
+        return response()->success(Response::HTTP_OK, 'Request successful', ['clients' => $clients]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\ClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $client = Client::create($request->all() + ['company_id' => auth()->user()->company_id]);
+        return response()->success(Response::HTTP_CREATED, 'Client created successfully', ['client' => $client]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client)
+    public function show($clientId)
     {
-        //
+        $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist.');
+        $client = Client::where([['id', $clientId], ['company_id', auth()->user()->company_id]])->first();
+        if($client !== null) $response = response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
+        return $response;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request,  $clientId)
     {
-        //
+        $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist.');
+        $client = Client::where([['id', $clientId], ['company_id', auth()->user()->company_id]])->first();
+        if($client !== null){
+            $client->update($request->all());
+            $response = response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
+        }
+        return $response;
     }
 
     /**

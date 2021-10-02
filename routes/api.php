@@ -14,7 +14,8 @@ use App\Http\Controllers\SubscriptionPackageController;
 use App\Http\Controllers\SubscriptionRecordController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CompanyController;
-
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\EngagementController;
 
 
 
@@ -68,6 +69,10 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('user', [UserController::class, 'profile']);
     //User
     Route::post('user', [UserController::class, 'update']);
+    // Client
+    Route::resource('clients', ClientController::class);
+    // Engagement
+    Route::resource('engagements', EngagementController::class);
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

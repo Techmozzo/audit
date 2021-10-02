@@ -9,5 +9,5 @@ class Engagement extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'company_id', 'client_id', 'year', 'first_time', 'audit_id'];
+    protected $fillable = ['company_id', 'client_id', 'year', 'first_time', 'audit_id'];
 }
