@@ -14,4 +14,12 @@ class Client extends Model
     public function engagement(){
         return $this->hasMany(Engagement::class);
     }
+
+    public function director(){
+        return $this->hasMany(ClientDirector::class);
+    }
+
+    public function subsidiary(){
+        return $this->hasMany(ClientSubsidiary::class);
+    }
 }

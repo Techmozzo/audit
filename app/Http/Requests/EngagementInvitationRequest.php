@@ -4,16 +4,16 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Gate;
 
-class SubscriptionRequest extends ParentRequest
+class EngagementInvitationRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize():bool
+    public function authorize()
     {
-        return Gate::allows('admin');
+        return Gate::allows('staff');
     }
 
     /**
@@ -24,10 +24,9 @@ class SubscriptionRequest extends ParentRequest
     public function rules()
     {
         return [
-            'subscription_package_id' => 'required|integer',
-            'payment_reference' => 'required|string',
-            'amount' => 'required|integer',
-            'duration' => 'required|string'
+            'user_id' => 'required|integer',
+            'engagement_team_role_id' => 'required|integer',
+            'company_id' => 'required|integer'
         ];
     }
 }

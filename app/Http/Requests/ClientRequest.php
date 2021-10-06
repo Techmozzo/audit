@@ -37,6 +37,23 @@ class ClientRequest extends ParentRequest
             'is_public_entity'=> 'required|integer',
             'nature_of_business' => 'required|string',
             'doubts' => 'required|string',
+
+            'director_name' => 'required|array',
+            'director_name.*' => 'required|string',
+            'director_units_held' => 'required|array',
+            'director_units_held.*' => 'required|string',
+            'director_designation' => 'required|array',
+            'director_designation.*' => 'required|string',
+
+            'is_part_of_group' => 'required|integer',
+            'subsidiary_name' => 'exclude_if:is_part_of_group,0|required|array',
+            'subsidiary_name.*' => 'exclude_if:is_part_of_group,0|required|string',
+            'subsidiary_percentage_holding' => 'exclude_if:is_part_of_group,0|required|array',
+            'subsidiary_percentage_holding.*' => 'exclude_if:is_part_of_group,0|required|integer',
+            'subsidiary_nature' => 'exclude_if:is_part_of_group,0|required|array',
+            'subsidiary_nature.*' => 'exclude_if:is_part_of_group,0|required|string',
+            'subsidiary_nature_of_business' => 'exclude_if:is_part_of_group,0|required|array',
+            'subsidiary_nature_of_business.*' => 'exclude_if:is_part_of_group,0|required|string'
         ];
     }
 }

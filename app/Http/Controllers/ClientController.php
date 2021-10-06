@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateClient;
 use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -26,9 +27,9 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Requests\ClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(ClientRequest $request, CreateClient $createClient)
     {
-        $client = Client::create($request->all() + ['company_id' => auth()->user()->company_id]);
+        $client = $createClient->store($request);
         return response()->success(Response::HTTP_CREATED, 'Client created successfully', ['client' => $client]);
     }
 

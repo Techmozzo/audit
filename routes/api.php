@@ -16,6 +16,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EngagementController;
+use App\Http\Controllers\EngagementInviteController;
 
 
 
@@ -71,6 +72,13 @@ Route::group(['middleware' => 'user'], function () {
     Route::post('user', [UserController::class, 'update']);
     // Client
     Route::resource('clients', ClientController::class);
+
+    // Engagement Invite
+    Route::post('engagements/{engagementId}/send-invite', [EngagementInviteController::class, 'send'] );
+    Route::patch('engagements/{engagementId}/accept-invite', [EngagementInviteController::class, 'accept'] );
+    Route::patch('engagements/{engagementId}/decline-invite', [EngagementInviteController::class, 'decline'] );
+
+
     // Engagement
     Route::resource('engagements', EngagementController::class);
 });

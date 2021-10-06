@@ -9,5 +9,5 @@ class ClientDirector extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'client_id', 'name', 'units_held', 'desgination'];
+    protected $fillable = ['company_id', 'client_id', 'name', 'units_held', 'designation'];
 }
