@@ -74,9 +74,9 @@ Route::group(['middleware' => 'user'], function () {
     Route::resource('clients', ClientController::class);
 
     // Engagement Invite
-    Route::post('engagements/{engagementId}/send-invite', [EngagementInviteController::class, 'send'] );
-    Route::patch('engagements/{engagementId}/accept-invite', [EngagementInviteController::class, 'accept'] );
-    Route::patch('engagements/{engagementId}/decline-invite', [EngagementInviteController::class, 'decline'] );
+    Route::post('engagements/send-invite', [EngagementInviteController::class, 'send'] );
+    Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept'] );
+    Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline'] );
 
 
     // Engagement
