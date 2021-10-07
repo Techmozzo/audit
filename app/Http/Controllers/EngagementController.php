@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\FindEngagement;
 use App\Http\Requests\EngagementRequest;
 use App\Models\Client;
 use App\Models\Engagement;
@@ -13,6 +14,13 @@ class EngagementController extends Controller
 
     protected $attribute = ['id','company_id', 'client_id', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
     'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'previous_auditor_opinion','previous_audit_review','previous_year_management_letter', 'previous_year_asf'];
+
+    protected $findEngagement;
+
+    public function __construct(FindEngagement $findEngagement)
+    {
+        $this->findEngagement = $findEngagement;
+    }
 
     public function index()
     {
@@ -46,10 +54,8 @@ class EngagementController extends Controller
      */
     public function show($engagementId)
     {
-        $response = response()->error(Response::HTTP_NOT_FOUND, 'Engagement does not exist.');
-        $engagement = Engagement::where([['id', $engagementId], ['company_id', auth()->user()->company_id]])->select($this->attribute)->first();
-        if($engagement !== null) $response = response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
-        return $response;
+        $engagement = $this->findEngagement->__invoke($engagementId);
+        return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
     }
 
     /**
@@ -60,13 +66,10 @@ class EngagementController extends Controller
      */
     public function update(Request $request, $engagementId)
     {
-        $response = response()->error(Response::HTTP_NOT_FOUND, 'Engagement does not exist.');
-        $engagement = Engagement::where([['id', $engagementId], ['company_id', auth()->user()->company_id]])->first();
-        if($engagement !== null){
-            $engagement->update($request->all());
-            $response = response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
-        }
-        return $response;
+        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement->update($request->all());
+        return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
+
     }
 
     /**

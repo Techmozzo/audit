@@ -20,4 +20,8 @@ class Engagement extends Model
     public function company(){
         return $this->belongsTo(Company::class);
     }
+
+    public function note(){
+        return $this->hasMany(EngagementNote::class);
+    }
 }

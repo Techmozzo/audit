@@ -17,6 +17,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
+use App\Http\Controllers\EngagementNoteController;
 
 
 
@@ -52,15 +53,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('assign-role', [UserRoleController::class, 'assignRoleToUser']);
     Route::post('remove-role', [UserRoleController::class, 'removeRoleFromUser']);
 
-//    Subscription
+    //    Subscription
     Route::get('subscriptions/packages', SubscriptionPackageController::class);
     Route::get('subscriptions', SubscriptionRecordController::class);
     Route::post('subscriptions', SubscriptionController::class);
 
     Route::get('company', [CompanyController::class, 'profile']);
     Route::post('company', [CompanyController::class, 'update']);
-
-
 });
 
 Route::group(['middleware' => 'user'], function () {
@@ -73,10 +72,13 @@ Route::group(['middleware' => 'user'], function () {
     // Client
     Route::resource('clients', ClientController::class);
 
+    // Engagement Note
+    Route::resource('engagements/{engagementId}/notes', EngagementNoteController::class);
+
     // Engagement Invite
-    Route::post('engagements/send-invite', [EngagementInviteController::class, 'send'] );
-    Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept'] );
-    Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline'] );
+    Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
+    Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
+    Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
 
 
     // Engagement
