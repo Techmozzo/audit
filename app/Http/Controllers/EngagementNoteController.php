@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\FindEngagement;
 use App\Http\Requests\EngagementNoteRequest;
-use App\Models\Engagement;
 use App\Models\EngagementNote;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
@@ -64,5 +63,4 @@ class EngagementNoteController extends Controller
             return $note;
         }
     }
-
 }

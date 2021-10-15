@@ -18,6 +18,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
+use App\Http\Controllers\PlanningController;
+use App\Http\Controllers\MaterialityController;
+
 
 
 
@@ -75,14 +78,22 @@ Route::group(['middleware' => 'user'], function () {
     // Engagement Note
     Route::resource('engagements/{engagementId}/notes', EngagementNoteController::class);
 
+    // Planning
+    Route::resource('engagements/{engagementId}/plannings', PlanningController::class);
+    Route::post('plannings/{planningId}/materialities', [MaterialityController::class, 'store']);
+
     // Engagement Invite
     Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
     Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
     Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
 
-
     // Engagement
     Route::resource('engagements', EngagementController::class);
+
+
+    // Planning
+    Route::resource('plannings', PlanningController::class);
+
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
