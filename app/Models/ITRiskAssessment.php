@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ITRiskAssessment extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['planning_id','company_id','name','function','review_performed'];
 }

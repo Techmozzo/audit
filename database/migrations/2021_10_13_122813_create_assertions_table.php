@@ -15,8 +15,8 @@ class CreateAssertionsTable extends Migration
     {
         Schema::create('assertions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('test_procedures_id');
-            $table->foreign('test_procedures_id')->references('id')->on('test_procedures')->onDelete('cascade');
+            $table->unsignedInteger('transaction_test_id');
+            $table->foreign('transaction_test_id')->references('id')->on('transaction_tests')->onDelete('cascade');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->integer('completeness')->default(0);

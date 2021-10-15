@@ -15,8 +15,8 @@ class CreateTestProceduresTable extends Migration
     {
         Schema::create('test_procedures', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('transaction_tests_id');
-            $table->foreign('transaction_tests_id')->references('id')->on('transaction_tests')->onDelete('cascade');
+            $table->unsignedInteger('transaction_test_id');
+            $table->foreign('transaction_test_id')->references('id')->on('transaction_tests')->onDelete('cascade');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('description');

@@ -9,5 +9,5 @@ class TestProcedure extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transaction_tests_id', 'company_id', 'description'];
+    protected $fillable = ['transaction_test_id', 'company_id', 'description'];
 }

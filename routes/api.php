@@ -20,6 +20,8 @@ use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
+use App\Http\Controllers\TransactionTestController;
+
 
 
 
@@ -81,6 +83,8 @@ Route::group(['middleware' => 'user'], function () {
     // Planning
     Route::resource('engagements/{engagementId}/plannings', PlanningController::class);
     Route::post('plannings/{planningId}/materialities', [MaterialityController::class, 'store']);
+    Route::post('transaction-classes/{classId}/tests', [TransactionTestController::class, 'store']);
+
 
     // Engagement Invite
     Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
