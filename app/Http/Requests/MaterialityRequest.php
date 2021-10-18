@@ -24,6 +24,10 @@ class MaterialityRequest extends FormRequest
     public function rules()
     {
         return [
+
+            'materiality_benchmark_amount' => 'required|integer',
+            'materiality_benchmark_reason' => 'required|string',
+
             'overall_materiality_level_id' => 'required|integer|different:performance_materiality_level_id|different:threshold_level_id',
             'overall_materiality_limit' => 'required|integer',
             'overall_materiality_amount' => 'required|integer',

@@ -28,9 +28,6 @@ class PlanningRequest extends ParentRequest
             'class_name.*' => 'required|string|distinct',
             'process_flow_document' => 'required|array',
             'process_flow_document.*' => 'required',
-
-            'materiality_amount' => 'required|string',
-            'materiality_reason' => 'required|string'
         ];
     }
 }
