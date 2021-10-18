@@ -2,19 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\FindEngagement;
+use App\Http\Requests\EngagementRequest;
+use App\Models\Client;
 use App\Models\Engagement;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EngagementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected $attribute = ['id','company_id', 'client_id', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
+    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'previous_auditor_opinion','previous_audit_review','previous_year_management_letter', 'previous_year_asf'];
+
+    protected $findEngagement;
+
+    public function __construct(FindEngagement $findEngagement)
+    {
+        $this->findEngagement = $findEngagement;
+    }
+
     public function index()
     {
-        //
+        $engagements = Engagement::where('company_id', auth()->user()->company_id)->select($this->attribute)->get();
+        return response()->success(Response::HTTP_OK, 'Request successful', ['engagements' => $engagements]);
     }
 
     /**
@@ -23,32 +34,42 @@ class EngagementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EngagementRequest $request)
     {
-        //
+        $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist.');
+        $user = auth()->user();
+        $client = Client::where([['id', $request->client_id], ['company_id', $user->company_id]])->first();
+        if($client !== null){
+            $audit_id = 'AT' . rand(100, 999) . rand(1000, 9999) . strtoupper(substr($client->name, 0, 2));
+            $engagement = $client->engagement()->create($request->except('client_id')+['audit_id' => $audit_id, 'company_id' => $user->company_id]);
+            $response = response()->success(Response::HTTP_CREATED, 'Engagement created successfully', ['client' => $client, 'engagement' => $engagement]);
+        }
+        return $response;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Engagement  $engagement
      * @return \Illuminate\Http\Response
      */
-    public function show(Engagement $engagement)
+    public function show($engagementId)
     {
-        //
+        $engagement = $this->findEngagement->__invoke($engagementId);
+        return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Engagement  $engagement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Engagement $engagement)
+    public function update(Request $request, $engagementId)
     {
-        //
+        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement->update($request->all());
+        return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
+
     }
 
     /**

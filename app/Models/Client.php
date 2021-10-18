@@ -10,4 +10,16 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = ['company_id', 'name', 'email', 'phone', 'address', 'registered_address', 'is_public_entity', 'nature_of_business', 'doubts', 'status'];
+
+    public function engagement(){
+        return $this->hasMany(Engagement::class);
+    }
+
+    public function director(){
+        return $this->hasMany(ClientDirector::class);
+    }
+
+    public function subsidiary(){
+        return $this->hasMany(ClientSubsidiary::class);
+    }
 }

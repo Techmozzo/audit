@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Planning;
+use App\Actions\CreateITRiskAssessment;
+use App\Actions\CreatePlanning;
+use App\Actions\FindPlanning;
+use App\Http\Requests\PlanningRequest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlanningController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    protected $findPlanning;
+
+    public function __construct(FindPlanning $findPlanning){
+        $this->findPlanning = $findPlanning;
     }
 
     /**
@@ -23,20 +23,10 @@ class PlanningController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PlanningRequest $request, $engagmentId, CreatePlanning $createPlanning)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Planning  $planning
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Planning $planning)
-    {
-        //
+        $planning = $createPlanning->create($request, $engagmentId);
+        return response()->success(Response::HTTP_CREATED, 'Planning Created Successfully', ['planning' => $planning]);
     }
 
     /**
@@ -46,19 +36,13 @@ class PlanningController extends Controller
      * @param  \App\Models\Planning  $planning
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Planning $planning)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Planning  $planning
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Planning $planning)
-    {
-        //
+    public function update(Request $request, $planningId, CreateITRiskAssessment $createITRiskAssessment){
+        $planning = $this->findPlanning->__invoke($planningId);
+        if($request->risk_assessment_name){
+            $createITRiskAssessment($request, $planning);
+        }
+        $planning->update($request->all());
+        return response()->success(Response::HTTP_ACCEPTED, 'Planning Updated Successfully');
     }
 }

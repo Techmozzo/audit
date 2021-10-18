@@ -70,4 +70,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Company::class);
     }
 
+    public function engagementRole(): object
+    {
+        return $this->belongsToMany(EngagementTeamRole::class, 'engagement_team_members', 'user_id', 'engagement_team_role_id');
+    }
+
+
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class SubscriptionRequest extends FormRequest
+class SubscriptionRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.

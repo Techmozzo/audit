@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
+use App\Models\EngagementNoteFlag;
 use Illuminate\Http\Request;
 
-class NoteController extends Controller
+class EngagementNoteFlagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class NoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\EngagementNoteFlag  $engagementNoteFlag
      * @return \Illuminate\Http\Response
      */
-    public function show(Note $note)
+    public function show(EngagementNoteFlag $engagementNoteFlag)
     {
         //
     }
@@ -43,10 +43,10 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\EngagementNoteFlag  $engagementNoteFlag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, EngagementNoteFlag $engagementNoteFlag)
     {
         //
     }
@@ -54,10 +54,10 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Note  $note
+     * @param  \App\Models\EngagementNoteFlag  $engagementNoteFlag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Note $note)
+    public function destroy(EngagementNoteFlag $engagementNoteFlag)
     {
         //
     }

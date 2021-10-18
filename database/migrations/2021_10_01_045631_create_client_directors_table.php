@@ -21,7 +21,7 @@ class CreateClientDirectorsTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->string('name');
             $table->integer('units_held')->nullable();
-            $table->string('desgination');
+            $table->string('designation');
             $table->softDeletes();
             $table->timestamps();
         });

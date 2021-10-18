@@ -9,5 +9,6 @@ class EngagementTeamMembers extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'engagement_team_role_id'];
+    protected $table = "engagement_team_members";
+    protected $fillable = ['user_id', 'engagement_team_role_id', 'company_id'];
 }
