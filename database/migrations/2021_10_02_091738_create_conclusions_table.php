@@ -14,7 +14,21 @@ class CreateConclusionsTable extends Migration
     public function up()
     {
         Schema::create('conclusions', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('engagement_id');
+            $table->foreign('engagement_id')->references('id')->on('engagements')->onDelete('cascade');
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->text('overall_analytical_review');
+            $table->text('going_concern_procedures');
+            $table->text('subsequent_procedures');
+            $table->text('management_representation_letter');
+            $table->text('management_letter');
+            $table->text('audit_summary_misstatement');
+            $table->text('audit_report');
+            $table->text('audited_financial_statement');
+            $table->text('other_financial_info');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

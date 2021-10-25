@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateExecution;
+use App\Http\Requests\ExecutionRequest;
 use App\Models\Execution;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExecutionController extends Controller
 {
@@ -23,9 +26,10 @@ class ExecutionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExecutionRequest $request, $engagmentId, CreateExecution $createExecution)
     {
-        //
+        $execution = $createExecution($request, $engagmentId);
+        return response()->success(Response::HTTP_CREATED, 'Execution Created Successfully', ['execution' => $execution]);
     }
 
     /**

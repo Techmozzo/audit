@@ -15,9 +15,11 @@ use App\Http\Controllers\SubscriptionRecordController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ConclusionController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
+use App\Http\Controllers\ExecutionController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\TransactionTestController;
@@ -82,6 +84,13 @@ Route::group(['middleware' => 'user'], function () {
     Route::post('transaction-classes/{classId}/tests', [TransactionTestController::class, 'store']);
 
 
+    // Execution
+    Route::resource('engagements/{engagementId}/executions', ExecutionController::class);
+
+    // Conclusions
+    Route::resource('engagements/{engagementId}/conclusions', ConclusionController::class);
+
+
     // Engagement Invite
     Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
     Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
@@ -93,7 +102,6 @@ Route::group(['middleware' => 'user'], function () {
 
     // Planning
     Route::resource('plannings', PlanningController::class);
-
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

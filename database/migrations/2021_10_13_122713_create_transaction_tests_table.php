@@ -20,6 +20,8 @@ class CreateTransactionTestsTable extends Migration
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
+            $table->longText('note')->nullable();
+            $table->string('attachment');
             $table->timestamps();
         });
     }
