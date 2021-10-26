@@ -5,34 +5,34 @@ services:
       context: .
       dockerfile: Dockerfile
     command: bash -c "composer install && php artisan serve --host=0.0.0.0 && sudo chmod -R 0777 /var/www/html/storage
-      && sudo chmod -R 0777 /var/www/html/bootstrap/cache"
+      && sudo chmod -R 0777 /var/www/html/bootstrap/cache && php artisan migrate"
     volumes:
       - .:/app
     ports:
       - 8000:8000
-    depends_on:
-      - audit_db
+    # depends_on:
+    #   - audit_db
 
   audit_queue:
     build:
       context: .
       dockerfile: Dockerfile
     command: 'php artisan queue:work'
-    depends_on:
-      - audit_db
+    # depends_on:
+    #   - audit_db
 
-  audit_db:
-    image: mysql:latest
-#    image: mysql
-    environment:
-      MYSQL_DATABASE: admin
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-    volumes:
-      - ./storage/dbdata:/var/lib/mysql
-    ports:
-      - 3306:3306
+#   audit_db:
+#     image: mysql:latest
+# #    image: mysql
+#     environment:
+#       MYSQL_DATABASE: admin
+#       MYSQL_USER: root
+#       MYSQL_PASSWORD: password
+#       MYSQL_ROOT_PASSWORD: password
+#     volumes:
+#       - ./storage/dbdata:/var/lib/mysql
+#     ports:
+#       - 3306:3306
 
   phpmyadmin:
     image: phpmyadmin
