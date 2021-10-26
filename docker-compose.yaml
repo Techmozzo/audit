@@ -13,11 +13,11 @@ services:
     # depends_on:
     #   - audit_db
 
-  audit_queue:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: 'php artisan queue:work'
+  # audit_queue:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: 'php artisan queue:work'
     # depends_on:
     #   - audit_db
 
