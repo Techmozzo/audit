@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ResponseMacroServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
