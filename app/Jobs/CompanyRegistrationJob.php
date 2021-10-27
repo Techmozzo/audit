@@ -11,19 +11,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class RegistrationJob implements ShouldQueue
+class CompanyRegistrationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $user;
+    public $user, $company;
 
     /**
      * RegistrationJob constructor.
      * @param $user
      */
-    public function __construct($user)
+    public function __construct($user, $company)
     {
             $this->user = $user;
+            $this->company = $company;
     }
 
     /**
@@ -34,7 +35,7 @@ class RegistrationJob implements ShouldQueue
     public function handle()
     {
         $subject = 'Welcome to Techmozzo Audit';
-        $heading = 'We are glad to have you onboard';
+        $heading = 'We are glad to have your company <b>'. $this->company->name .'</b> onboard';
         $body = "Welcome, Thank you for choosing techmozzo. Thanks for helping us serve our clients better with your tool.
                              <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks";
         Mail::to($this->user->email)->send(new SendEmail($this->user->fullName(), $subject, $heading, $body));

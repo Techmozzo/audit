@@ -38,7 +38,8 @@ use App\Http\Controllers\TransactionTestController;
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', LoginController::class);
     Route::post('logout', LogoutController::class);
-    Route::post('register', RegisterController::class);
+    Route::post('register/admin', [RegisterController::class, 'admin']);
+    Route::post('register/company', [RegisterController::class, 'company'])->middleware('admin');
     Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::patch('reset-password', ResetPasswordController::class);

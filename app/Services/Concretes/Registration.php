@@ -2,8 +2,10 @@
 
 namespace App\Services\Concretes;
 
-use App\Actions\CreateUser;
+use App\Actions\CreateAdmin;
 use App\Http\Resources\UserResource;
+use App\Jobs\CompanyRegistrationJob;
+use App\Jobs\CompanyRegistrationJobAdmin;
 use App\Jobs\ManagingPartnerInvitationJob;
 use App\Jobs\RegistrationJob;
 use App\Jobs\RegistrationJobAdmin;
@@ -12,33 +14,49 @@ use App\Models\Role;
 use App\Models\UserInvitation;
 use App\Services\Interfaces\RegistrationInterface;
 use App\Traits\HashId;
+use Carbon\Carbon;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Registration implements RegistrationInterface
 {
     use HashId;
 
-    public function execute($request): array
+    protected $createAdmin;
+
+    public function __construct(CreateAdmin $createAdmin)
     {
-        $user = $this->register(new CreateUser(), $request);
+        $this->createAdmin = $createAdmin;
+    }
+
+    public function admin($request): array
+    {
+        $admin = $this->createAdmin->__invoke($request);
+        $role = Role::where('name', 'admin')->first();
+        $admin->role()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
+        RegistrationJob::dispatch($admin)->onQueue('audit_queue');
+        RegistrationJobAdmin::dispatch($admin, 'admin@techmozzo.com')->onQueue('audit_queue');
         return [
-            'access_token' => auth()->guard()->login($user),
+            'access_token' => auth()->guard()->login($admin),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => new UserResource($user)
+            'user' => new UserResource($admin)
         ];
     }
 
 
-    public function register($createUser, $request): object
+    public function company($request)
     {
+        $user = auth()->user();
+        if ($user->company_id !== null) {
+            throw new HttpResponseException(response()->error(Response::HTTP_UNAUTHORIZED, 'You are not allowed to register more that one company with same email.'));
+        }
         $company = $this->createCompany($request);
-        $user = $createUser($company->id, $request);
-        $role = Role::where('name', 'admin')->first();
-        $user->role()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
-        RegistrationJob::dispatch($user)->onQueue('audit_queue');
-        RegistrationJobAdmin::dispatch($user, 'admin@techmozzo.com')->onQueue('audit_queue');
+        CompanyRegistrationJob::dispatch($user, $company)->onQueue('audit_queue');
+        CompanyRegistrationJobAdmin::dispatch($user, $company, 'admin@techmozzo.com')->onQueue('audit_queue');
+        $user->update(['company_id' => $company->id]);
         $this->inviteManagingPartner($company, $request);
-        return $user;
+        return ['company' => $company, 'user' => new UserResource($user)];
     }
 
 
@@ -50,14 +68,13 @@ class Registration implements RegistrationInterface
         $company->phone = $request['company_phone'];
         $company->techmozzo_id = 'TM' . rand(100, 999) . rand(1000, 9999) . 'AT';
         $company->save();
-
         return $company;
     }
 
 
     protected function inviteManagingPartner($company, $request): void
     {
-        if ($request['email'] !== $request['managing_partner_email']) {
+        if (auth()->user()->email !== $request['managing_partner_email']) {
             $invitedUser = UserInvitation::create([
                 'name' => $request['managing_partner_name'],
                 'email' => $request['managing_partner_email'],

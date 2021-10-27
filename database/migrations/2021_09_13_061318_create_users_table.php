@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('designation')->nullable();
             $table->integer('is_verified')->default(0);
-            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

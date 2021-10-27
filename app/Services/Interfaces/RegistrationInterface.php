@@ -6,5 +6,7 @@ namespace App\Services\Interfaces;
 
 interface RegistrationInterface
 {
-    public function execute(array $request):array;
+    public function admin(array $request):array;
+
+    public function company(array $request);
 }
