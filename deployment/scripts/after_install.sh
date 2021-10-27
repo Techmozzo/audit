@@ -7,7 +7,8 @@ cd /var/www/html
 #
 
 # Run composer  when no using docker-compose.yaml
-composer install --no-ansi --no-dev --no-suggest --no-inter
+
+composer install
 
 #/usr/bin/composer.phar install --no-script
 
@@ -23,7 +24,7 @@ composer install --no-ansi --no-dev --no-suggest --no-inter
 # sudo docker-compose exec audit sh
 
 #migrate
-php artisan migrate -f
+php artisan migrate --force
 
 #serve the application when no using docker-compose.yaml
 
