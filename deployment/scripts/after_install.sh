@@ -7,7 +7,7 @@ cd /var/www/html
 #
 
 # Run composer  when no using docker-compose.yaml
-sudo /usr/bin/composer.phar install --no-ansi --no-dev --no-suggest --no-inter
+composer install --no-ansi --no-dev --no-suggest --no-inter
 
 #/usr/bin/composer.phar install --no-script
 
