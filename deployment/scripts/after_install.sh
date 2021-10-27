@@ -28,6 +28,4 @@ php artisan migrate --force
 
 #serve the application when no using docker-compose.yaml
 
-php artisan serve
-
-
+php artisan serve --host=0.0.0.0
