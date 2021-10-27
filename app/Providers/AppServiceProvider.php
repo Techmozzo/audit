@@ -17,14 +17,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        //check that app is local
-        if ($this->app->isLocal()) {
-            //if local register your services you require for development
-            $this->app->register(Barryvdh\Debugbar\ServiceProvider::class);
-        } else {
-            //else register your services you require for production
-            $this->app['request']->server->set('HTTPS', true);
-        }
     }
 
     /**
@@ -34,6 +26,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+         //check that app is local
+         if ($this->app->isLocal()) {
+            //if local register your services you require for development
+            $this->app->register(Barryvdh\Debugbar\ServiceProvider::class);
+        } else {
+            //else register your services you require for production
+            $this->app['request']->server->set('HTTPS', true);
+        }
+        
         Builder::defaultStringLength(191);
         $this->app->singleton(RegistrationInterface::class, Registration::class);
     }
