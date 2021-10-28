@@ -16,6 +16,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConclusionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
@@ -103,6 +104,9 @@ Route::group(['middleware' => 'user'], function () {
 
     // Planning
     Route::resource('plannings', PlanningController::class);
+
+    // DashBoard
+    Route::get('/dashboard', [DashboardController::class, 'data']);
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

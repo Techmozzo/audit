@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 class EngagementController extends Controller
 {
 
-    protected $attribute = ['id','company_id', 'client_id', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
-    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'previous_auditor_opinion','previous_audit_review','previous_year_management_letter', 'previous_year_asf'];
+    protected $attribute = ['id','company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
+    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf'];
 
     protected $findEngagement;
 
