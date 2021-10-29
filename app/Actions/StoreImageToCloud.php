@@ -12,7 +12,7 @@ class StoreImageToCloud
      */
     public function __invoke($data):string{
         $path = $data->store('docs', 's3');
-        return config('filesystems.s3url').$path;
+        return config('filesystems.disks.s3.url').$path;
     }
 
 }

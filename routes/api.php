@@ -21,6 +21,7 @@ use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
 use App\Http\Controllers\ExecutionController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\TransactionTestController;
@@ -107,6 +108,9 @@ Route::group(['middleware' => 'user'], function () {
 
     // DashBoard
     Route::get('/dashboard', [DashboardController::class, 'data']);
+
+    // Upload Document
+    Route::post('upload', FileUploadController::class);
 });
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
