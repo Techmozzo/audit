@@ -24,7 +24,7 @@ composer install
 # sudo docker-compose exec audit sh
 
 #migrate
-php artisan migrate --force
+php artisan migrate:refresh --force
 
 #serve the application when no using docker-compose.yaml
 

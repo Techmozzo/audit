@@ -11,12 +11,12 @@ class DashboardController extends Controller
 {
 
     protected $engagemetAttribute = ['id','company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
-    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf'];
+    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status'];
 
     public function data()
     {
         $user = auth()->user();
-        $engagementQuery = Engagement::where('company_id', $user->company_id);
+        $engagementQuery = Engagement::with('client:id,name')->where('company_id', $user->company_id);
         $clientQuery = Client::where('company_id', $user->company_id);
         $conclusionQuery = Conclusion::where('company_id', $user->company_id);
         $engagementCount = $engagementQuery->count();

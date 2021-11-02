@@ -27,9 +27,9 @@ class CreateEngagementsTable extends Migration
             $table->text('accounting_standard');
             $table->text('auditing_standard');
             $table->text('staff_power');
-            $table->text('partner_skill');
-            $table->text('external_expert');
-            $table->text('members_dependence');
+            $table->text('partner_skill')->nullable();
+            $table->text('external_expert')->nullable();
+            $table->text('members_dependence')->nullable();
             $table->text('appointment_letter')->nullable();
             $table->text('contacted_previous_auditor')->nullable();
             $table->text('previous_auditor_response')->nullable();
@@ -38,6 +38,7 @@ class CreateEngagementsTable extends Migration
             $table->text('previous_audit_review')->nullable();
             $table->text('previous_year_management_letter')->nullable();
             $table->text('previous_year_asf')->nullable();
+            $table->string('status')->default('planning');
             $table->softDeletes();
             $table->timestamps();
         });
