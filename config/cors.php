@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000','https://myauditapp.surge.sh','https://myaudit.surge.sh','*'],
+    'allowed_origins' => ['http://localhost:3000','https://myauditapp.surge.sh','https://myaudit.surge.sh','http://myauditapp.surge.sh','http://myaudit.surge.sh','*'],
 
     'allowed_origins_patterns' => [],
 
