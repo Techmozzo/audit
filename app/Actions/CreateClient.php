@@ -19,8 +19,8 @@ class CreateClient
             'nature_of_business' => $request->nature_of_business,
             'doubts' => $request->doubts
         ]);
-        $this->storeDirector($client, $request);
-        $this->storeSubsidiary($client, $request);
+        if(isset($request->director_name)) $this->storeDirector($client, $request);
+        if(isset($request->subsidiary_name)) $this->storeSubsidiary($client, $request);
         return $client;
     }
 
@@ -39,7 +39,7 @@ class CreateClient
 
     private function storeSubsidiary($client, $request)
     {
-        foreach ($request->director_name as $key => $name) {
+        foreach ($request->subsidiary_name as $key => $name) {
             $client->subsidiary()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
