@@ -24,6 +24,7 @@ use App\Http\Controllers\ExecutionController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TransactionTestController;
 
 /*
@@ -48,6 +49,12 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('users/invite', [UserInvitationController::class, 'sendInvite']);
     Route::post('users/register/{token}', [UserInvitationController::class, 'registerInvitedUser']);
 });
+
+
+// Client
+
+Route::get('audit-messages/{clientToken}', [MessageController::class, 'allMessagesByClient']);
+Route::post('audit-messages/{clientToken}', [MessageController::class, 'sendMessageByClient']);
 
 
 Route::group(['middleware' => 'admin'], function () {
@@ -77,7 +84,14 @@ Route::group(['middleware' => 'user'], function () {
     Route::post('user', [UserController::class, 'update']);
 
     // Client
+    Route::get('clients/{client_id}/messages', [MessageController::class, 'allMessagesByCompany']);
+    Route::post('clients/{client_id}/messages', [MessageController::class, 'sendMessageByCompany']);
+    Route::get('clients/{client_id}/message-link', [MessageController::class, 'clientMessagingLink']);
     Route::resource('clients', ClientController::class);
+
+// Messages
+    Route::get('/messages/{message_id}', [MessageController::class, 'getMessage']);
+
 
     // Engagement Note
     Route::resource('engagements/{engagementId}/notes', EngagementNoteController::class);

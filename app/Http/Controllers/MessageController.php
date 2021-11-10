@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateMessage;
+use App\Actions\FindClient;
 use App\Actions\FindMessage;
 use App\Http\Requests\MessageRequest;
-use App\Models\Client;
+use App\Jobs\MessageJob;
 use App\Models\Message;
 use App\Traits\HashId;
+use Carbon\Carbon;
 use League\CommonMark\Node\Block\Document;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,34 +17,47 @@ class MessageController extends Controller
 {
     use HashId;
 
-    public function sendMessageByCompany(MessageRequest $request, $clientId, CreateMessage $createMessage)
+    public function sendMessageByCompany(MessageRequest $request, $clientId, CreateMessage $createMessage, FindClient $findClient)
     {
         $user = auth()->user();
+        $client = $findClient($request->clientId);
         $data = ['company_id' => $user->company_id, 'user_id' => $user->id, 'title' => $request->title, 'message' => $request->message, 'sender' => 'company', 'documents' => $request->documents ?? null];
         $message = $createMessage($data, $clientId);
+        MessageJob::dispatch($client, $this->encrypt($clientId))->delay(Carbon::now()->addSeconds(5));
         return response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
     }
 
-    public function sendMessageByClient(MessageRequest $request, $clientToken, CreateMessage $createMessage)
+    public function sendMessageByClient(MessageRequest $request, $clientToken, CreateMessage $createMessage, FindClient $findClient)
     {
         $token = $this->decrypt($clientToken);
         $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');
         if (isset($token['data_id'])) {
-            $client = Client::find($token['data_id']);
-            $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist');
-            if ($client !== null) {
-                $data = ['company_id' => $client->company_id, 'user_id' => null, 'title' => $request->title, 'message' => $request->message, 'sender' => 'client', 'documents' => $request->documents ?? null];
-                $message = $createMessage($data, $client->id);
-                $response = response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
-            }
+            $client = $findClient($token['data_id']);
+            $data = ['company_id' => $client->company_id, 'user_id' => null, 'title' => $request->title, 'message' => $request->message, 'sender' => 'client', 'documents' => $request->documents ?? null];
+            $message = $createMessage($data, $client->id);
+            // MessageAdminJob::dispatch('Admin Email')->delay(Carbon::now()->addSeconds(5));
+            $response = response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
         }
         return $response;
     }
 
-    public function allMessages($clientId)
+    public function allMessagesByCompany($clientId, FindClient $findClient)
     {
-        $messages = Message::with('documents:id,message_id,url')->where([['client_id', $clientId], ['company_id', auth()->user()->company_id]])->get();
+        $client = $findClient($clientId);
+        $messages = Message::with('documents:id,message_id,url')->where([['client_id', $client->id], ['company_id', auth()->user()->company_id]])->get();
         return response()->success(Response::HTTP_OK, 'Request Successful', ['messages' => $messages]);
+    }
+
+    public function allMessagesByClient($clientToken, FindClient $findClient)
+    {
+        $token = $this->decrypt($clientToken);
+        $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');
+        if (isset($token['data_id'])) {
+            $client = $findClient($token['data_id']);
+            $messages = Message::with('documents:id,message_id,url')->where([['client_id', $client->id], ['company_id', auth()->user()->company_id]])->get();
+            $response = response()->success(Response::HTTP_OK, 'Request Successful', ['messages' => $messages]);
+        }
+        return $response;
     }
 
     public function getMessage($id, FindMessage $findMessage)
@@ -51,7 +66,9 @@ class MessageController extends Controller
         return response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
     }
 
-    public function clientMessagingLink()
+    public function clientMessagingLink($clientId)
     {
+        $link = 'http://localhost:8000/audit-messages/' . $this->encrypt($clientId);
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['link' => $link]);
     }
 }
