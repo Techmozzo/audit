@@ -24,7 +24,7 @@ class EngagementController extends Controller
 
     public function index()
     {
-        $engagements = Engagement::where('company_id', auth()->user()->company_id)->select($this->attribute)->get();
+        $engagements = Engagement::with('client')->where('company_id', auth()->user()->company_id)->select($this->attribute)->get();
         return response()->success(Response::HTTP_OK, 'Request successful', ['engagements' => $engagements]);
     }
 

@@ -21,6 +21,9 @@ class CreateClient
         ]);
         if(isset($request->director_name)) $this->storeDirector($client, $request);
         if(isset($request->subsidiary_name)) $this->storeSubsidiary($client, $request);
+
+        // if(isset($request->directors)) $this->storeDirector($client, $request);
+        // if(isset($request->subsidiaries)) $this->storeSubsidiary($client, $request);
         return $client;
     }
 
@@ -50,4 +53,34 @@ class CreateClient
             ]);
         }
     }
+
+
+
+    // private function storeDirector($client, $request)
+    // {
+    //     foreach ($request->directors as $director) {
+    //         $client->director()->create([
+    //             'company_id' => $client->company_id,
+    //             'client_id' => $client->client_id,
+    //             'name' => $director['name'],
+    //             'units_held' => $director['units_held'],
+    //             'designation' => $director['designation']
+    //         ]);
+    //     }
+    // }
+
+    // private function storeSubsidiary($client, $request)
+    // {
+    //     foreach ($request->subsidiaries as $subsidiary) {
+    //         $client->subsidiary()->create([
+    //             'company_id' => $client->company_id,
+    //             'client_id' => $client->client_id,
+    //             'name' => $subsidiary['name'],
+    //             'percentage_holding' => $subsidiary['percentage_holding'],
+    //             'nature' => $subsidiary['nature'],
+    //             'nature_of_business' => $subsidiary['nature_of_business']
+    //         ]);
+    //     }
+    // }
+
 }

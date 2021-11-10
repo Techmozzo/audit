@@ -54,6 +54,22 @@ class ClientRequest extends ParentRequest
             'subsidiary_nature.*' => 'exclude_if:is_part_of_group,0|required|string',
             'subsidiary_nature_of_business' => 'exclude_if:is_part_of_group,0|required|array',
             'subsidiary_nature_of_business.*' => 'exclude_if:is_part_of_group,0|required|string'
+
+
+            // 'directors' => 'required|array',
+            // 'directors.*' => 'required|array',
+            // 'directors.*.name' => 'required|string',
+            // 'directors.*.units_held' => 'required|integer',
+            // 'directors.*.designation' => 'required|string',
+
+            // 'is_part_of_group' => 'required|integer',
+
+            // 'subsidiaries' => 'exclude_if:is_part_of_group,0|required|array',
+            // 'subsidiaries.*' => 'exclude_if:is_part_of_group,0|required|array',
+            // 'subsidiaries.*.name' => 'exclude_if:is_part_of_group,0|required|string',
+            // 'subsidiaries.*.percentage_holding' => 'exclude_if:is_part_of_group,0|required|integer',
+            // 'subsidiaries.*.nature' => 'exclude_if:is_part_of_group,0|required|string',
+            // 'subsidiaries.*.nature_of_business' => 'exclude_if:is_part_of_group,0|required|string'
         ];
     }
 }
