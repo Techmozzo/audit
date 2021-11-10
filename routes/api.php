@@ -75,6 +75,7 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('user', [UserController::class, 'profile']);
     //User
     Route::post('user', [UserController::class, 'update']);
+
     // Client
     Route::resource('clients', ClientController::class);
 
