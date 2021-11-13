@@ -34,7 +34,7 @@ class EngagementRequest extends ParentRequest
             'auditing_standard' => 'required|string',
             // 'staff_power' => 'required|string',
             // 'partner_skill' => 'required|string',
-            'external_expert' => 'required|string',
+            'external_expert' => 'required|integer',
             // 'members_dependence' => 'required|string',
             // optional
             'appointment_letter' => 'exclude_if:first_time,0|required|string',
