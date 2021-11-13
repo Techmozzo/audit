@@ -24,7 +24,7 @@ composer install
 # sudo docker-compose exec audit sh
 
 #migrate
-php artisan migrate --force
+php artisan migrate:refresh --path=database/migrations/2021_10_01_091701_create_engagements_table.php --force
 
 #serve the application when no using docker-compose.yaml
 

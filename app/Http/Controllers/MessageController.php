@@ -20,7 +20,7 @@ class MessageController extends Controller
     public function sendMessageByCompany(MessageRequest $request, $clientId, CreateMessage $createMessage, FindClient $findClient)
     {
         $user = auth()->user();
-        $client = $findClient($request->clientId);
+        $client = $findClient($clientId);
         $data = ['company_id' => $user->company_id, 'user_id' => $user->id, 'title' => $request->title, 'message' => $request->message, 'sender' => 'company', 'documents' => $request->documents ?? null];
         $message = $createMessage($data, $clientId);
         MessageJob::dispatch($client, $this->encrypt($clientId))->delay(Carbon::now()->addSeconds(5));
@@ -68,7 +68,7 @@ class MessageController extends Controller
 
     public function clientMessagingLink($clientId)
     {
-        $link = 'http://localhost:8000/audit-messages/' . $this->encrypt($clientId);
+        $link = 'http://localhost:8000/audit-messages/'.$this->encrypt($clientId)['data_token'];
         return response()->success(Response::HTTP_OK, 'Request Successful', ['link' => $link]);
     }
 }

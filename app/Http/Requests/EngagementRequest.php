@@ -32,10 +32,10 @@ class EngagementRequest extends ParentRequest
             'engagement_letter' => 'required|string',
             'accounting_standard' => 'required|string',
             'auditing_standard' => 'required|string',
-            'staff_power' => 'required|string',
-            'partner_skill' => 'required|string',
+            // 'staff_power' => 'required|string',
+            // 'partner_skill' => 'required|string',
             'external_expert' => 'required|string',
-            'members_dependence' => 'required|string',
+            // 'members_dependence' => 'required|string',
             // optional
             'appointment_letter' => 'exclude_if:first_time,0|required|string',
             'contacted_previous_auditor' => 'exclude_if:first_time,0|required|string',

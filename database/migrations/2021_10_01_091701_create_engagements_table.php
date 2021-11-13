@@ -26,10 +26,7 @@ class CreateEngagementsTable extends Migration
             $table->text('engagement_letter');
             $table->text('accounting_standard');
             $table->text('auditing_standard');
-            $table->text('staff_power');
-            $table->text('partner_skill')->nullable();
             $table->text('external_expert')->nullable();
-            $table->text('members_dependence')->nullable();
             $table->text('appointment_letter')->nullable();
             $table->text('contacted_previous_auditor')->nullable();
             $table->text('previous_auditor_response')->nullable();
