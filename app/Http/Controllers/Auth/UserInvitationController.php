@@ -27,6 +27,17 @@ class UserInvitationController extends Controller
     }
 
 
+    public function getInvitationInfo($token){
+        $token = $this->decrypt($token);
+        $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');
+        if(isset($token['data_id'])){
+            $invitedUser = UserInvitation::find($token['data_id']);
+            $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invitation does not exist.');
+            if($invitedUser !== null) $response = response()->success(Response::HTTP_CREATED, 'Registration Successful', ['invitedUser' => $invitedUser]);
+        }
+        return $response;
+    }
+
     public function registerInvitedUser(RegisterUserRequest $request, $token, CreateUser $createUser){
         $token = $this->decrypt($token);
         $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');

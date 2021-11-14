@@ -46,6 +46,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::patch('reset-password', ResetPasswordController::class);
+    Route::get('users/invite/{token}', [UserInvitationController::class, 'getInvitationInfo']);
     Route::post('users/invite', [UserInvitationController::class, 'sendInvite']);
     Route::post('users/register/{token}', [UserInvitationController::class, 'registerInvitedUser']);
 });

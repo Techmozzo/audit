@@ -23,11 +23,10 @@ class PlanningRequest extends ParentRequest
     {
         return [
             'trial_balance' => 'required|string',
-
-            'class_name' => 'required|array',
-            'class_name.*' => 'required|string|distinct',
-            'process_flow_document' => 'required|array',
-            'process_flow_document.*' => 'required',
+            'classes' => 'required|array',
+            'classes.*' => 'required|array|distinct',
+            'classes.*.name' => 'required|string',
+            'classes.*.process_flow_document' => 'required'
         ];
     }
 }
