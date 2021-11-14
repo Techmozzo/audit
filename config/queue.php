@@ -105,7 +105,9 @@ return [
              */
             'worker' => env('RABBITMQ_WORKER', 'default'),
 
-        ],
+         ],
+
+         // ... 
 
 
     ],

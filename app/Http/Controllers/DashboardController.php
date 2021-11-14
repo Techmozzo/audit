@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DashboardController extends Controller
 {
 
-    protected $engagemetAttribute = ['id','company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'staff_power',
-    'partner_skill', 'external_expert', 'members_dependence', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status'];
+    protected $engagemetAttribute = ['id','company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'external_expert', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status'];
 
     public function data()
     {
