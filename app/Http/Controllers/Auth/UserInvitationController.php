@@ -59,4 +59,14 @@ class UserInvitationController extends Controller
         }
         return $response;
     }
+
+    public function getInvitedUsers(){
+        $invitedUsers = UserInvitation::where('company_id', auth()->user()->company_id)->select('email', 'name', 'status', 'company_id', 'role_id')->get();
+        return response()->success(Response::HTTP_CREATED, 'Registration Successful', ['invitedUsers' => $invitedUsers]);
+    }
+
+    public function getPendingInvites(){
+        $pendingInvites = UserInvitation::where([['company_id', auth()->user()->company_id], ['status', 0]])->select('email', 'name', 'status', 'company_id', 'role_id')->get();
+        return response()->success(Response::HTTP_CREATED, 'Registration Successful', ['pendingInvites' => $pendingInvites]);
+    }
 }

@@ -26,6 +26,7 @@ use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TransactionTestController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,12 @@ Route::post('audit-messages/{clientToken}', [MessageController::class, 'sendMess
 Route::group(['middleware' => 'admin'], function () {
     //Roles
     Route::get('roles', [RoleController::class, 'index']);
+
+    // Users
+    Route::get('users/invitations/pending', [UserInvitationController::class, 'getPendingInvites']);
+    Route::get('users/invitations', [UserInvitationController::class, 'getInvitedUsers']);
+    Route::get('users', [UsersController::class, 'getAllUsers']);
+
 
     //Permission management
     Route::get('users-role', [UserRoleController::class, 'companyUsersRole']);
