@@ -36,12 +36,11 @@ class MessageJob implements ShouldQueue
     {
         $subject = 'Audit Message';
         $heading = 'New Message  From Techmozzo Audit Platform';
-        $body = "This is to inform you of that you have a new message on the Audit Platform.
+        $body = "This is to inform you that you have a new message on the Audit Platform.
         <br/><br/><b><a href=http://localhost:8000/audit-messages/".$this->token."/messages>View Message</a></b><br />
         If the button doesn't work, copy and paste the URL in your browser's address bar: <br /> <br />
         http://localhost:8000/audit-messages/".$this->token."/messages
         <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks";
         Mail::to($this->email)->send(new SendEmail('Admin', $subject, $heading, $body));
-
     }
 }

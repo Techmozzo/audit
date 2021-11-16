@@ -6,6 +6,7 @@ use App\Actions\CreateMessage;
 use App\Actions\FindClient;
 use App\Actions\FindMessage;
 use App\Http\Requests\MessageRequest;
+use App\Jobs\MessageAdminJob;
 use App\Jobs\MessageJob;
 use App\Models\Message;
 use App\Traits\HashId;
@@ -23,7 +24,7 @@ class MessageController extends Controller
         $client = $findClient($clientId);
         $data = ['company_id' => $user->company_id, 'user_id' => $user->id, 'title' => $request->title, 'message' => $request->message, 'sender' => 'company', 'documents' => $request->documents ?? null];
         $message = $createMessage($data, $clientId);
-        MessageJob::dispatch($client, $this->encrypt($clientId))->delay(Carbon::now()->addSeconds(5));
+        MessageJob::dispatch($client, $this->encrypt($clientId))->onQueue('audit_queue');
         return response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
     }
 
@@ -35,7 +36,7 @@ class MessageController extends Controller
             $client = $findClient($token['data_id']);
             $data = ['company_id' => $client->company_id, 'user_id' => null, 'title' => $request->title, 'message' => $request->message, 'sender' => 'client', 'documents' => $request->documents ?? null];
             $message = $createMessage($data, $client->id);
-            // MessageAdminJob::dispatch('Admin Email')->delay(Carbon::now()->addSeconds(5));
+            MessageAdminJob::dispatch($client, 'admin@techmozzo.com')->onQueue('audit_queue');
             $response = response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
         }
         return $response;
@@ -54,7 +55,7 @@ class MessageController extends Controller
         $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invalid Token');
         if (isset($token['data_id'])) {
             $client = $findClient($token['data_id']);
-            $messages = Message::with('documents:id,message_id,url')->where([['client_id', $client->id], ['company_id', auth()->user()->company_id]])->get();
+            $messages = Message::with('documents:id,message_id,url')->where([['client_id', $client->id], ['company_id', $client->company_id]])->get();
             $response = response()->success(Response::HTTP_OK, 'Request Successful', ['messages' => $messages]);
         }
         return $response;
