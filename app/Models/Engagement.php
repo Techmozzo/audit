@@ -23,4 +23,16 @@ class Engagement extends Model
     public function note(){
         return $this->hasMany(EngagementNote::class);
     }
+
+    public function planning(){
+        return $this->hasOne(Planning::class);
+    }
+
+    public function execution(){
+        return $this->hasMany(Execution::class);
+    }
+
+    public function conclusion(){
+        return $this->hasMany(Conclusion::class);
+    }
 }
