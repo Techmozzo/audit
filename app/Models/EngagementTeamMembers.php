@@ -11,4 +11,8 @@ class EngagementTeamMembers extends Model
 
     protected $table = "engagement_team_members";
     protected $fillable = ['user_id', 'engagement_team_role_id', 'company_id'];
+
+    public function teamMemberRole(){
+        return $this->belongsTo(EngagementTeamRole::class, 'engagement_team_role_id')->select('id','name','description');
+    }
 }

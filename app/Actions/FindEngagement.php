@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FindEngagement{
     public function __invoke($engagementId){
-        $engagement = Engagement::with('client', 'planning', 'execution', 'conclusion')->where([['id', $engagementId], ['company_id', auth()->user()->company_id]])->first();
+        $engagement = Engagement::with('client', 'planning', 'execution', 'conclusion', 'teamMembers.teamMemberRole')->where([['id', $engagementId], ['company_id', auth()->user()->company_id]])->first();
         if($engagement == null){
             throw new HttpResponseException(response()->error(Response::HTTP_NOT_FOUND, 'Engagement does not exist'));
         }else{

@@ -25,14 +25,19 @@ class Engagement extends Model
     }
 
     public function planning(){
-        return $this->hasOne(Planning::class);
+        return $this->hasOne(Planning::class)->select('id', 'company_id', 'engagement_id', 'trial_balance','test_details','control_testing','journal_entries','material_misstatement','combine_risk_assessment','planning_analytics');
     }
 
     public function execution(){
-        return $this->hasMany(Execution::class);
+        return $this->hasMany(Execution::class)->select('id', 'engagement_id','company_id','contract_agreement_review','legal_counsel_review','contingent_liability_review','party_transaction_review','expert_work_review','other_estimate_review');
     }
 
     public function conclusion(){
-        return $this->hasMany(Conclusion::class);
+        return $this->hasMany(Conclusion::class)->select('id', 'engagement_id', 'company_id','overall_analytical_review','going_concern_procedures','subsequent_procedures','management_representation_letter',
+        'management_letter','audit_summary_misstatement','audit_report','audited_financial_statement','other_financial_info','status');
+    }
+
+    public function teamMembers(){
+        return $this->hasMany(EngagementTeamMembers::class)->select('id','user_id', 'engagement_team_role_id', 'company_id', 'engagement_id');
     }
 }
