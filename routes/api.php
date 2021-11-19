@@ -119,8 +119,6 @@ Route::group(['middleware' => 'user'], function () {
 
     // Engagement Invite
     Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
-    Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
-    Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
 
     // Engagement
     Route::resource('engagements', EngagementController::class);
@@ -135,5 +133,8 @@ Route::group(['middleware' => 'user'], function () {
     // Upload Document
     Route::post('upload', FileUploadController::class);
 });
+
+Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
+Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
