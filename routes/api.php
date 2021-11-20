@@ -118,7 +118,7 @@ Route::group(['middleware' => 'user'], function () {
 
 
     // Engagement Invite
-    Route::post('engagements/send-invite', [EngagementInviteController::class, 'send']);
+    Route::post('engagements/{engagementId}/send-invite', [EngagementInviteController::class, 'send']);
 
     // Engagement
     Route::resource('engagements', EngagementController::class);

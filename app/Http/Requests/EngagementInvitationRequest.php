@@ -24,9 +24,10 @@ class EngagementInvitationRequest extends ParentRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer',
-            'engagement_team_role_id' => 'required|integer',
-            'company_id' => 'required|integer'
+            'team_members' => 'required|array',
+            'team_members.*' => 'required|array',
+            'team_members.*.user_id' => 'required|integer',
+            'team_members.*.engagement_team_role_id' => 'required|integer'
         ];
     }
 }
