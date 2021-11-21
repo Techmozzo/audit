@@ -27,7 +27,6 @@ class EngagementNoteRequest extends ParentRequest
         return [
             'message' => 'required|string',
             'engagement_note_flag_id' => 'required|integer',
-            'engagement_stage_id' => 'required|integer',
         ];
     }
 }

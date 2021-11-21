@@ -30,7 +30,7 @@ class EngagementNoteController extends Controller
     {
         $user = auth()->user();
         $engagement = $this->findEngagement->__invoke($engagementId);
-        $note = $engagement->note()->create($request->all() + ['user_id' => $user->id, 'company_id' => $user->company_id]);
+        $note = $engagement->note()->create(['message' => $request->message, 'engagement_stage_id' => $engagement->status->id, 'engagement_note_flag_id' => $request->engagement_note_flag_id, 'user_id' => $user->id, 'company_id' => $user->company_id]);
         return response()->success(Response::HTTP_CREATED, 'Request Successful', ['note' => $note]);
     }
 
@@ -54,12 +54,13 @@ class EngagementNoteController extends Controller
         //
     }
 
-    private function find($engagementId, $noteId){
+    private function find($engagementId, $noteId)
+    {
         $note = EngagementNote::with('user:id,first_name,last_name', 'engagement:id,name:year', 'flag:id,name,description', 'stage:id,name,description')
-        ->where([['id', $noteId], ['engagement_id', $engagementId], ['company_id', auth()->user()->company_id]])->first();
-        if($note == null){
+            ->where([['id', $noteId], ['engagement_id', $engagementId], ['company_id', auth()->user()->company_id]])->first();
+        if ($note == null) {
             throw new HttpResponseException(response()->error(Response::HTTP_NOT_FOUND, 'Note does not exist'));
-        }else{
+        } else {
             return $note;
         }
     }
