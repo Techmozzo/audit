@@ -15,11 +15,16 @@ class Client extends Model
         return $this->hasMany(Engagement::class);
     }
 
-    public function director(){
-        return $this->hasMany(ClientDirector::class);
+    public function company(){
+        return $this->belongsTo(Company::class)->select('id','name', 'dp', 'address', 'city', 'state', 'country', 'zip');
     }
 
-    public function subsidiary(){
-        return $this->hasMany(ClientSubsidiary::class);
+    public function directors(){
+        return $this->hasMany(ClientDirector::class)->select('company_id', 'client_id', 'name', 'units_held', 'designation');
     }
+
+    public function subsidiaries(){
+        return $this->hasMany(ClientSubsidiary::class)->select('company_id', 'client_id', 'name', 'percentage_holding', 'nature', 'nature_of_business');
+    }
+
 }

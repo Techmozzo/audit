@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateClient;
+use App\Actions\FindClient;
 use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -38,12 +39,11 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($clientId)
+
+    public function show($clientId, FindClient $findClient)
     {
-        $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist.');
-        $client = Client::where([['id', $clientId], ['company_id', auth()->user()->company_id]])->first();
-        if($client !== null) $response = response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
-        return $response;
+        $client = $findClient($clientId);
+        return response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
     }
 
     /**
@@ -52,15 +52,11 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $clientId)
+    public function update(Request $request,  $clientId, FindClient $findClient)
     {
-        $response = response()->error(Response::HTTP_NOT_FOUND, 'Client does not exist.');
-        $client = Client::where([['id', $clientId], ['company_id', auth()->user()->company_id]])->first();
-        if($client !== null){
+        $client = $findClient($clientId);
             $client->update($request->all());
-            $response = response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
-        }
-        return $response;
+            return response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
     }
 
     /**
