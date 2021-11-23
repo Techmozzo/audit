@@ -35,7 +35,7 @@ class CreateEngagementsTable extends Migration
             $table->text('previous_audit_review')->nullable();
             $table->text('previous_year_management_letter')->nullable();
             $table->text('previous_year_asf')->nullable();
-            $table->unsignedInteger('status');
+            $table->unsignedInteger('status')->default(1);
             $table->foreign('status')->references('id')->on('engagement_stages');
             $table->softDeletes();
             $table->timestamps();
