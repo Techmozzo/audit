@@ -28,8 +28,7 @@ class EngagementRequest extends ParentRequest
             'name' => 'required|string',
             'year' => 'required|string',
             'first_time' => 'required|integer',
-            'status' => 'required|integer',
-
+            
             // required
             'engagement_letter' => 'required|string',
             'accounting_standard' => 'required|string',
