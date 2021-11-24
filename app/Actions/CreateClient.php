@@ -30,7 +30,7 @@ class CreateClient
     private function storeDirector($client, $request)
     {
         foreach ($request->director_name as $key => $name) {
-            $client->director()->create([
+            $client->directors()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
                 'name' => $name,
@@ -43,7 +43,7 @@ class CreateClient
     private function storeSubsidiary($client, $request)
     {
         foreach ($request->subsidiary_name as $key => $name) {
-            $client->subsidiary()->create([
+            $client->subsidiaries()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
                 'name' => $name,
@@ -59,7 +59,7 @@ class CreateClient
     // private function storeDirector($client, $request)
     // {
     //     foreach ($request->directors as $director) {
-    //         $client->director()->create([
+    //         $client->directors()->create([
     //             'company_id' => $client->company_id,
     //             'client_id' => $client->client_id,
     //             'name' => $director['name'],
@@ -72,7 +72,7 @@ class CreateClient
     // private function storeSubsidiary($client, $request)
     // {
     //     foreach ($request->subsidiaries as $subsidiary) {
-    //         $client->subsidiary()->create([
+    //         $client->subsidiaries()->create([
     //             'company_id' => $client->company_id,
     //             'client_id' => $client->client_id,
     //             'name' => $subsidiary['name'],
