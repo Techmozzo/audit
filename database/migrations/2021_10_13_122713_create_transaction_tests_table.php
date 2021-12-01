@@ -21,7 +21,7 @@ class CreateTransactionTestsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
             $table->longText('note')->nullable();
-            $table->string('attachment');
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }

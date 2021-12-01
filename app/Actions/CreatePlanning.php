@@ -15,7 +15,7 @@ class CreatePlanning
             ['trial_balance' => $request->trial_balance]
         );
         $this->createTransactionClass($request, $planning, $companyId);
-        return Planning::with('transactionClass:id,planning_id,company_id,name,process_flow_document')->where('id', $planning->id)->select('id', 'company_id', 'engagement_id', 'trial_balance')->first();
+        return Planning::with('transactionClass:id,planning_id,company_id,name,process_flow_document')->where('id', $planning->id)->select('id', 'company_id', 'engagement_id', 'trial_balance', 'stage')->first();
     }
 
     private function createTransactionClass($request, $planning, $companyId)

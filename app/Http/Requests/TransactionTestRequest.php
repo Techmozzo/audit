@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
 class TransactionTestRequest extends ParentRequest
 {
     /**
@@ -25,8 +23,9 @@ class TransactionTestRequest extends ParentRequest
     {
         return [
             'test_name' => 'required|string',
-            'test_procedure' => 'required|array',
-            'test_procedure.*' => 'required|string|distinct',
+            'test_procedures' => 'required|array',
+            'test_procedures.*' => 'required|array',
+            'test_procedures.*.description' => 'required|string',
         ];
     }
 }

@@ -39,7 +39,7 @@ class PlanningController extends Controller
 
     public function update(Request $request, $planningId, CreateITRiskAssessment $createITRiskAssessment){
         $planning = $this->findPlanning->__invoke($planningId);
-        if($request->risk_assessment_name){
+        if($request->risk_assessments){
             $createITRiskAssessment($request, $planning);
         }
         $planning->update($request->all());
