@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class MaterialityLevel extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name','type','lower_limit','upper_limit','description'];
 }

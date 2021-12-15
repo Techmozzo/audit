@@ -32,7 +32,7 @@ class TransactionTestController extends Controller
         $companyId = auth()->user()->company_id;
         $test = TransactionTest::create(['name' => $request->test_name, 'company_id' => $companyId, 'transaction_class_id' => $classId ]);
         foreach($request->test_procedures as $procedure){
-            TestProcedure::create(['description' => $procedure->description, 'company_id' => $companyId, 'transaction_test_id' => $test->id]);
+            TestProcedure::create(['description' => $procedure['description'], 'company_id' => $companyId, 'transaction_test_id' => $test->id]);
         }
         Assertion::create($request->all() + ['company_id' => $companyId, 'transaction_test_id' => $test->id]);
         $test =  TransactionTest::with('procedure:id,transaction_test_id,description', 'assertion:id,transaction_test_id,completeness,existence,accuracy,valuation,obligation_right,disclosure_presentation')->where('id', $test->id)->get();

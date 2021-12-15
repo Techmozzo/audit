@@ -43,6 +43,6 @@ class PlanningController extends Controller
             $createITRiskAssessment($request, $planning);
         }
         $planning->update($request->all());
-        return response()->success(Response::HTTP_ACCEPTED, 'Planning Updated Successfully');
+        return response()->success(Response::HTTP_ACCEPTED, 'Planning Updated Successfully', ['planning' => $planning]);
     }
 }

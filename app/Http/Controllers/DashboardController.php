@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function data()
     {
         $user = auth()->user();
-        $engagementQuery = Engagement::with('client:id,name')->where('company_id', $user->company_id);
+        $engagementQuery = Engagement::with('client:id,name', 'status')->where('company_id', $user->company_id);
         $clientQuery = Client::where('company_id', $user->company_id);
         $conclusionQuery = Conclusion::where('company_id', $user->company_id);
         $engagementCount = $engagementQuery->count();

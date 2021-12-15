@@ -26,6 +26,7 @@ composer install
 #migrate
 php artisan migrate --force
 # php artisan migrate:fresh --force
+# php artisan db:seed
 
 
 #serve the application when no using docker-compose.yaml
