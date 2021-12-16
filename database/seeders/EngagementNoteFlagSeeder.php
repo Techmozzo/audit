@@ -14,7 +14,6 @@ class EngagementNoteFlagSeeder extends Seeder
      */
     public function run()
     {
-        EngagementNoteFlag::truncate();
         $flags = [
             ['name' => 'high','description' => 'Top priority'],
             ['name' => 'medium','description' => 'priority'],

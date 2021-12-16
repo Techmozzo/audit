@@ -14,7 +14,6 @@ class SubscriptionPackageSeeder extends Seeder
      */
     public function run()
     {
-        SubscriptionPackage::truncate();
         $packages = [
             ['name' => 'Gold', 'description' => 'Golden package', 'monthly_price' => 9.99, 'annual_price' => 99.99, 'feature' => ['test', 'test 2']],
             ['name' => 'Silver', 'description' => 'Silver package', 'monthly_price' => 4.99, 'annual_price' => 48.99, 'feature' => ['test', 'test 3']],

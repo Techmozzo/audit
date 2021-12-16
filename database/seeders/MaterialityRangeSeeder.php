@@ -14,7 +14,6 @@ class MaterialityRangeSeeder extends Seeder
      */
     public function run()
     {
-        MaterialityRange::truncate();
         $ranges = [
             ['name' => 'Expense', 'lower_limit' => 5.00, 'upper_limit' => 10.00, 'description' => 'Expense range materiality.'],
             ['name' => 'Revenue', 'lower_limit' => 0.00, 'upper_limit' => 5.00, 'description' => 'Revenue range materiality.'],

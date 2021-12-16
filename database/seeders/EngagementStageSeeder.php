@@ -14,7 +14,6 @@ class EngagementStageSeeder extends Seeder
      */
     public function run()
     {
-        EngagementStage::truncate();
         $stages = [
             ['name' => 'planning','description' => 'Planning stage'],
             ['name' => 'execution','description' => 'Execution'],

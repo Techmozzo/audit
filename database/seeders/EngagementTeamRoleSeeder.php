@@ -14,8 +14,6 @@ class EngagementTeamRoleSeeder extends Seeder
      */
     public function run()
     {
-        EngagementTeamRole::truncate();
-
         $roles = [
             ['name' => 'manager','description' => 'Engagement Manager'],
             ['name' => 'managing_partner','description' => 'Engagement Managing Partner'],
