@@ -15,8 +15,8 @@ class SubscriptionPackageSeeder extends Seeder
     public function run()
     {
         $packages = [
-            ['name' => 'Gold', 'description' => 'Golden package', 'monthly_price' => 9.99, 'annual_price' => 99.99, 'feature' => ['test', 'test 2']],
-            ['name' => 'Silver', 'description' => 'Silver package', 'monthly_price' => 4.99, 'annual_price' => 48.99, 'feature' => ['test', 'test 3']],
+            ['name' => 'Gold', 'description' => 'Golden package', 'monthly_price' => 9.99, 'annual_price' => 99.99, 'feature' => json_encode(['test', 'test 2'])],
+            ['name' => 'Silver', 'description' => 'Silver package', 'monthly_price' => 4.99, 'annual_price' => 48.99, 'feature' => json_encode(['test', 'test 3'])],
         ];
 
         foreach($packages as $package){
