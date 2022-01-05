@@ -17,7 +17,6 @@ class CreateClient
             'registered_address' => $request->registered_address,
             'is_public_entity' => $request->is_public_entity,
             'nature_of_business' => $request->nature_of_business,
-            'doubts' => $request->doubts
         ]);
         if(isset($request->director_name)) $this->storeDirector($client, $request);
         if(isset($request->subsidiary_name)) $this->storeSubsidiary($client, $request);

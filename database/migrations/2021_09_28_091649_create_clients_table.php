@@ -26,7 +26,6 @@ class CreateClientsTable extends Migration
             $table->string('registered_address')->nullable();
             $table->integer('is_public_entity')->default(0);
             $table->text('nature_of_business');
-            $table->text('doubts');
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -36,7 +36,6 @@ class ClientRequest extends ParentRequest
             'registered_address' => 'required|string',
             'is_public_entity'=> 'required|integer',
             'nature_of_business' => 'required|string',
-            'doubts' => 'required|string',
 
             'director_name' => 'required|array',
             'director_name.*' => 'required|string',
