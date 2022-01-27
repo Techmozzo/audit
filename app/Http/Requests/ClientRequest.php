@@ -39,20 +39,20 @@ class ClientRequest extends ParentRequest
 
             'director_name' => 'required|array',
             'director_name.*' => 'required|string',
-            'director_units_held' => 'required|array',
-            'director_units_held.*' => 'required|string',
+            // 'director_units_held' => 'required|array',
+            // 'director_units_held.*' => 'required|string',
             'director_designation' => 'required|array',
             'director_designation.*' => 'required|string',
 
             'is_part_of_group' => 'required|integer',
-            'subsidiary_name' => 'exclude_if:is_part_of_group,0|required|array',
-            'subsidiary_name.*' => 'exclude_if:is_part_of_group,0|required|string',
-            'subsidiary_percentage_holding' => 'exclude_if:is_part_of_group,0|required|array',
-            'subsidiary_percentage_holding.*' => 'exclude_if:is_part_of_group,0|required|integer',
-            'subsidiary_nature' => 'exclude_if:is_part_of_group,0|required|array',
-            'subsidiary_nature.*' => 'exclude_if:is_part_of_group,0|required|string',
-            'subsidiary_nature_of_business' => 'exclude_if:is_part_of_group,0|required|array',
-            'subsidiary_nature_of_business.*' => 'exclude_if:is_part_of_group,0|required|string'
+            'group_name' => 'exclude_if:is_part_of_group,0|required|array',
+            'group_name.*' => 'exclude_if:is_part_of_group,0|required|string',
+            'group_percentage_holding' => 'exclude_if:is_part_of_group,0|required|array',
+            'group_percentage_holding.*' => 'exclude_if:is_part_of_group,0|required|integer',
+            'group_industry' => 'exclude_if:is_part_of_group,0|required|array',
+            'group_industry.*' => 'exclude_if:is_part_of_group,0|required|string',
+            'group_type' => 'exclude_if:is_part_of_group,0|required|array',
+            'group_type.*' => 'exclude_if:is_part_of_group,0|required|string',
 
 
             // 'directors' => 'required|array',
@@ -63,12 +63,13 @@ class ClientRequest extends ParentRequest
 
             // 'is_part_of_group' => 'required|integer',
 
-            // 'subsidiaries' => 'exclude_if:is_part_of_group,0|required|array',
-            // 'subsidiaries.*' => 'exclude_if:is_part_of_group,0|required|array',
-            // 'subsidiaries.*.name' => 'exclude_if:is_part_of_group,0|required|string',
-            // 'subsidiaries.*.percentage_holding' => 'exclude_if:is_part_of_group,0|required|integer',
-            // 'subsidiaries.*.nature' => 'exclude_if:is_part_of_group,0|required|string',
-            // 'subsidiaries.*.nature_of_business' => 'exclude_if:is_part_of_group,0|required|string'
+            // 'groups' => 'exclude_if:is_part_of_group,0|required|array',
+            // 'groups.*' => 'exclude_if:is_part_of_group,0|required|array',
+            // 'groups.*.name' => 'exclude_if:is_part_of_group,0|required|string',
+            // 'groups.*.percentage_holding' => 'exclude_if:is_part_of_group,0|required|integer',
+            // 'groups.*.industry' => 'exclude_if:is_part_of_group,0|required|string',
+            // 'groups.*.type' => 'exclude_if:is_part_of_group,0|required|string',
+
         ];
     }
 }

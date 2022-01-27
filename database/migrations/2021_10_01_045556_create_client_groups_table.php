@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientSubsidiariesTable extends Migration
+class CreateClientGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateClientSubsidiariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('client_subsidiaries', function (Blueprint $table) {
+        Schema::create('client_groups', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
@@ -21,8 +21,8 @@ class CreateClientSubsidiariesTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
             $table->string('name');
             $table->integer('percentage_holding')->nullable();
-            $table->string('nature');
-            $table->text('nature_of_business');
+            $table->string('industry');
+            $table->string('type');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateClientSubsidiariesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_subsidiaries');
+        Schema::dropIfExists('client_groups');
     }
 }

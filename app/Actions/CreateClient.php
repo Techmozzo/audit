@@ -19,10 +19,10 @@ class CreateClient
             'nature_of_business' => $request->nature_of_business,
         ]);
         if(isset($request->director_name)) $this->storeDirector($client, $request);
-        if(isset($request->subsidiary_name)) $this->storeSubsidiary($client, $request);
+        if(isset($request->group_name)) $this->storeGroup($client, $request);
 
         // if(isset($request->directors)) $this->storeDirector($client, $request);
-        // if(isset($request->subsidiaries)) $this->storeSubsidiary($client, $request);
+        // if(isset($request->groups)) $this->storeGroup($client, $request);
         return $client;
     }
 
@@ -33,22 +33,22 @@ class CreateClient
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
                 'name' => $name,
-                'units_held' => $request->director_units_held[$key],
+                'units_held' => $request->director_units_held[$key] ?? null,
                 'designation' => $request->director_designation[$key]
             ]);
         }
     }
 
-    private function storeSubsidiary($client, $request)
+    private function storeGroup($client, $request)
     {
-        foreach ($request->subsidiary_name as $key => $name) {
-            $client->subsidiaries()->create([
+        foreach ($request->group_name as $key => $name) {
+            $client->groups()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
                 'name' => $name,
-                'percentage_holding' => $request->subsidiary_percentage_holding[$key],
-                'nature' => $request->subsidiary_nature[$key],
-                'nature_of_business' => $request->subsidiary_nature_of_business[$key]
+                'percentage_holding' => $request->group_percentage_holding[$key],
+                'industry' => $request->group_industry[$key],
+                'type' => $request->group_type[$key]
             ]);
         }
     }
@@ -62,22 +62,22 @@ class CreateClient
     //             'company_id' => $client->company_id,
     //             'client_id' => $client->client_id,
     //             'name' => $director['name'],
-    //             'units_held' => $director['units_held'],
+    //             'units_held' => $director['units_held'] ?? null,
     //             'designation' => $director['designation']
     //         ]);
     //     }
     // }
 
-    // private function storeSubsidiary($client, $request)
+    // private function storeGroups($client, $request)
     // {
-    //     foreach ($request->subsidiaries as $subsidiary) {
-    //         $client->subsidiaries()->create([
+    //     foreach ($request->groups as $group) {
+    //         $client->groups()->create([
     //             'company_id' => $client->company_id,
     //             'client_id' => $client->client_id,
-    //             'name' => $subsidiary['name'],
-    //             'percentage_holding' => $subsidiary['percentage_holding'],
-    //             'nature' => $subsidiary['nature'],
-    //             'nature_of_business' => $subsidiary['nature_of_business']
+    //             'name' => $group['name'],
+    //             'percentage_holding' => $group['percentage_holding'],
+    //             'industry' => $group['industry'],
+    //             'type' => $group['type']
     //         ]);
     //     }
     // }

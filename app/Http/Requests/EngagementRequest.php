@@ -28,13 +28,13 @@ class EngagementRequest extends ParentRequest
             'name' => 'required|string',
             'year' => 'required|string',
             'first_time' => 'required|integer',
-            
+
             // required
             'engagement_letter' => 'required|string',
             'accounting_standard' => 'required|string',
             'auditing_standard' => 'required|string',
-            // 'staff_power' => 'required|string',
-            // 'partner_skill' => 'required|string',
+            'sufficient_staff_power' => 'required|string',
+            'partner_skill' => 'required|string',
             'external_expert' => 'required|integer',
             // 'members_dependence' => 'required|string',
             // optional
@@ -46,6 +46,7 @@ class EngagementRequest extends ParentRequest
             'previous_audit_review' => 'exclude_if:first_time,0|required|string',
             'previous_year_management_letter' => 'exclude_if:first_time,0|required|string',
             'previous_year_asf' => 'exclude_if:first_time,0|required|string'
+
         ];
     }
 }

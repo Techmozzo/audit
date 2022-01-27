@@ -23,8 +23,8 @@ class Client extends Model
         return $this->hasMany(ClientDirector::class)->select('company_id', 'client_id', 'name', 'units_held', 'designation');
     }
 
-    public function subsidiaries(){
-        return $this->hasMany(ClientSubsidiary::class)->select('company_id', 'client_id', 'name', 'percentage_holding', 'nature', 'nature_of_business');
+    public function groups(){
+        return $this->hasMany(ClientGroup::class)->select('company_id', 'client_id', 'name', 'percentage_holding', 'industry', 'type');
     }
 
 }
