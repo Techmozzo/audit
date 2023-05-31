@@ -24,7 +24,8 @@ class MessageController extends Controller
         $client = $findClient($clientId);
         $data = ['company_id' => $user->company_id, 'user_id' => $user->id, 'title' => $request->title, 'message' => $request->message, 'sender' => 'company', 'documents' => $request->documents ?? null];
         $message = $createMessage($data, $clientId);
-        MessageJob::dispatch($client, $this->encrypt($clientId))->onQueue('audit_queue');
+        // MessageJob::dispatch($client, $this->encrypt($clientId))->onQueue('audit_queue');
+        MessageJob::dispatch($client, $this->encrypt($clientId));
         return response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
     }
 
@@ -36,7 +37,8 @@ class MessageController extends Controller
             $client = $findClient($token['data_id']);
             $data = ['company_id' => $client->company_id, 'user_id' => null, 'title' => $request->title, 'message' => $request->message, 'sender' => 'client', 'documents' => $request->documents ?? null];
             $message = $createMessage($data, $client->id);
-            MessageAdminJob::dispatch($client, 'admin@techmozzo.com')->onQueue('audit_queue');
+            // MessageAdminJob::dispatch($client, 'admin@techmozzo.com')->onQueue('audit_queue');
+            MessageAdminJob::dispatch($client, env('ADMIN_EMAIL'));
             $response = response()->success(Response::HTTP_OK, 'Request Successful', ['message' => $message]);
         }
         return $response;

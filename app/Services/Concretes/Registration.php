@@ -34,8 +34,10 @@ class Registration implements RegistrationInterface
         $admin = $this->createAdmin->__invoke($request);
         $role = Role::where('name', 'admin')->first();
         $admin->role()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
-        RegistrationJob::dispatch($admin)->onQueue('audit_queue');
-        RegistrationJobAdmin::dispatch($admin, 'admin@techmozzo.com')->onQueue('audit_queue');
+        // RegistrationJob::dispatch($admin)->onQueue('audit_queue');
+        // RegistrationJobAdmin::dispatch($admin, 'admin@techmozzo.com')->onQueue('audit_queue');
+        RegistrationJob::dispatch($admin);
+        RegistrationJobAdmin::dispatch($admin, env('ADMIN_EMAIL'));
         return [
             'access_token' => auth()->guard()->login($admin),
             'token_type' => 'bearer',
@@ -52,8 +54,11 @@ class Registration implements RegistrationInterface
             throw new HttpResponseException(response()->error(Response::HTTP_UNAUTHORIZED, 'You are not allowed to register more that one company with same email.'));
         }
         $company = $this->createCompany($request);
-        CompanyRegistrationJob::dispatch($user, $company)->onQueue('audit_queue');
-        CompanyRegistrationJobAdmin::dispatch($user, $company, 'admin@techmozzo.com')->onQueue('audit_queue');
+        // CompanyRegistrationJob::dispatch($user, $company)->onQueue('audit_queue');
+        // CompanyRegistrationJobAdmin::dispatch($user, $company, 'admin@techmozzo.com')->onQueue('audit_queue');
+
+        CompanyRegistrationJob::dispatch($user, $company);
+        CompanyRegistrationJobAdmin::dispatch($user, $company, env('ADMIN_EMAIL'));
         $user->update(['company_id' => $company->id]);
         $this->inviteManagingPartner($company, $request);
         return ['company' => $company, 'user' => new UserResource($user)];
@@ -82,7 +87,8 @@ class Registration implements RegistrationInterface
                 'role_id' => Role::where('name', 'managing_partner')->first()->id
             ]);
             $token = $this->encrypt($invitedUser->id)['data_token'];
-            ManagingPartnerInvitationJob::dispatch($request, 'Managing Partner', $token)->onQueue('audit_queue');
+            // ManagingPartnerInvitationJob::dispatch($request, 'Managing Partner', $token)->onQueue('audit_queue');
+            ManagingPartnerInvitationJob::dispatch($request, 'Managing Partner', $token);
         }
     }
 }

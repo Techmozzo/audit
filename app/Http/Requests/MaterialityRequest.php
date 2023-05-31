@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MaterialityRequest extends FormRequest
+class MaterialityRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.

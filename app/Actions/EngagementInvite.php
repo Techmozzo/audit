@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Jobs\EngagementInvitationAdminJob;
 use App\Jobs\EngagementInvitationJob;
 use App\Models\Engagement;
 use App\Models\EngagementInvite as Invite;
@@ -29,7 +30,8 @@ class EngagementInvite
                         $data = (object)['token' => $this->encrypt($invite->id)['data_token'], 'invite' => $invite, 'role' => $role];
                         EngagementInvitationJob::dispatch($data);
                         // ->onQueue('audit_queue');
-                        // EngagementInvitationAdminJob::dispatch($data, 'Admin Email')->onQueue('audit_queue');
+                        EngagementInvitationAdminJob::dispatch($data, env('ADMIN_EMAIL'));
+                        // ->onQueue('audit_queue');
                     }
                 }
             }
