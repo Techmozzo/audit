@@ -21,7 +21,8 @@ class ForgotPasswordController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user !== null) {
             $encoded = $this->encrypt($user->id);
-            ForgotPasswordJob::dispatch($user, $encoded['data_token'])->onQueue('audit_queue');
+            // ForgotPasswordJob::dispatch($user, $encoded['data_token'])->onQueue('audit_queue');
+            ForgotPasswordJob::dispatch($user, $encoded['data_token']);
             $data = response()->success(Response::HTTP_OK, 'An email has been sent to you.');
         }
         return $data;

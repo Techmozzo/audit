@@ -35,7 +35,7 @@ class CompanyRegistrationJob implements ShouldQueue
     public function handle()
     {
         $subject = 'Welcome to Techmozzo Audit';
-        $heading = 'We are glad to have your company <b>'. $this->company->name .'</b> onboard';
+        $heading = 'We are glad to have your company '. $this->company->name .' onboard';
         $body = "Welcome, Thank you for choosing techmozzo. Thanks for helping us serve our clients better with your tool.
                              <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks";
         Mail::to($this->user->email)->send(new SendEmail($this->user->fullName(), $subject, $heading, $body));

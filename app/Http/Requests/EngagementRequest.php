@@ -33,8 +33,8 @@ class EngagementRequest extends ParentRequest
             'engagement_letter' => 'required|string',
             'accounting_standard' => 'required|string',
             'auditing_standard' => 'required|string',
-            'sufficient_staff_power' => 'required|string',
-            'partner_skill' => 'required|string',
+            'sufficient_staff_power' => 'nullable|string',
+            'partner_skill' => 'nullable|string',
             'external_expert' => 'required|integer',
             // 'members_dependence' => 'required|string',
             // optional

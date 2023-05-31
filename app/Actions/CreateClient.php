@@ -18,68 +18,68 @@ class CreateClient
             'is_public_entity' => $request->is_public_entity,
             'nature_of_business' => $request->nature_of_business,
         ]);
-        if(isset($request->director_name)) $this->storeDirector($client, $request);
-        if(isset($request->group_name)) $this->storeGroup($client, $request);
+        // if(isset($request->director_name)) $this->storeDirector($client, $request);
+        // if(isset($request->group_name)) $this->storeGroup($client, $request);
 
-        // if(isset($request->directors)) $this->storeDirector($client, $request);
-        // if(isset($request->groups)) $this->storeGroup($client, $request);
+        if(isset($request->directors)) $this->storeDirector($client, $request);
+        if(isset($request->groups)) $this->storeGroup($client, $request);
         return $client;
     }
 
+    // private function storeDirector($client, $request)
+    // {
+    //     foreach ($request->director_name as $key => $name) {
+    //         $client->directors()->create([
+    //             'company_id' => $client->company_id,
+    //             'client_id' => $client->client_id,
+    //             'name' => $name,
+    //             'units_held' => $request->director_units_held[$key] ?? null,
+    //             'designation' => $request->director_designation[$key]
+    //         ]);
+    //     }
+    // }
+
+    // private function storeGroup($client, $request)
+    // {
+    //     foreach ($request->group_name as $key => $name) {
+    //         $client->groups()->create([
+    //             'company_id' => $client->company_id,
+    //             'client_id' => $client->client_id,
+    //             'name' => $name,
+    //             'percentage_holding' => $request->group_percentage_holding[$key],
+    //             'industry' => $request->group_industry[$key],
+    //             'type' => $request->group_type[$key]
+    //         ]);
+    //     }
+    // }
+
+
+
     private function storeDirector($client, $request)
     {
-        foreach ($request->director_name as $key => $name) {
+        foreach ($request->directors as $director) {
             $client->directors()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
-                'name' => $name,
-                'units_held' => $request->director_units_held[$key] ?? null,
-                'designation' => $request->director_designation[$key]
+                'name' => $director['name'],
+                'units_held' => $director['units_held'] ?? null,
+                'designation' => $director['designation']
             ]);
         }
     }
 
     private function storeGroup($client, $request)
     {
-        foreach ($request->group_name as $key => $name) {
+        foreach ($request->groups as $group) {
             $client->groups()->create([
                 'company_id' => $client->company_id,
                 'client_id' => $client->client_id,
-                'name' => $name,
-                'percentage_holding' => $request->group_percentage_holding[$key],
-                'industry' => $request->group_industry[$key],
-                'type' => $request->group_type[$key]
+                'name' => $group['name'],
+                'percentage_holding' => $group['percentage_holding'],
+                'industry' => $group['industry'],
+                'type' => $group['type']
             ]);
         }
     }
-
-
-
-    // private function storeDirector($client, $request)
-    // {
-    //     foreach ($request->directors as $director) {
-    //         $client->directors()->create([
-    //             'company_id' => $client->company_id,
-    //             'client_id' => $client->client_id,
-    //             'name' => $director['name'],
-    //             'units_held' => $director['units_held'] ?? null,
-    //             'designation' => $director['designation']
-    //         ]);
-    //     }
-    // }
-
-    // private function storeGroups($client, $request)
-    // {
-    //     foreach ($request->groups as $group) {
-    //         $client->groups()->create([
-    //             'company_id' => $client->company_id,
-    //             'client_id' => $client->client_id,
-    //             'name' => $group['name'],
-    //             'percentage_holding' => $group['percentage_holding'],
-    //             'industry' => $group['industry'],
-    //             'type' => $group['type']
-    //         ]);
-    //     }
-    // }
 
 }

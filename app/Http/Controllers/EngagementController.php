@@ -68,6 +68,7 @@ class EngagementController extends Controller
     {
         $engagement = $this->findEngagement->__invoke($engagementId);
         $engagement->update($request->all());
+        dd(tap($engagement)->update($request->all()));
         return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
 
     }

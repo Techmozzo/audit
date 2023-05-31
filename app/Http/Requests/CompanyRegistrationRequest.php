@@ -28,8 +28,8 @@ class CompanyRegistrationRequest extends ParentRequest
             'company_email' => 'required|email|unique:companies,email',
             'company_phone' => 'required|string|max:15|unique:companies,phone',
             'managing_partner_name' => 'required|string',
-            'managing_partner_email' => 'required|email|unique:users,email',
-            'managing_partner_phone' => 'required|string|max:15|unique:users,phone',
+            'managing_partner_email' => 'required|email|unique:users,email,'.auth()->user()->email.',email',
+            'managing_partner_phone' => 'required|string|max:15|unique:users,phone,'.auth()->user()->phone.',phone',
         ];
     }
 }

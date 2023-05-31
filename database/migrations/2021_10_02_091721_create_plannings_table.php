@@ -26,6 +26,7 @@ class CreatePlanningsTable extends Migration
             $table->text('material_misstatement')->nullable();
             $table->text('combine_risk_assessment')->nullable();
             $table->text('planning_analytics')->nullable();
+            $table->unsignedSmallInteger('stage')->default(0);
             $table->integer('status')->default(0);
             $table->timestamps();
         });
