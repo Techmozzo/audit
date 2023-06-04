@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use \Illuminate\Auth\AuthenticationException;
 
 class Handler extends ExceptionHandler
 {
@@ -60,10 +62,14 @@ class Handler extends ExceptionHandler
                 return response()->error(Response::HTTP_UNAUTHORIZED, 'Token is invalid');
             } elseif ($exception instanceof JWTException) {
                 return response()->error(Response::HTTP_UNAUTHORIZED, 'Issues with Token');
-            } elseif ($exception instanceof AuthorizationException) {
-                return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }elseif ($exception instanceof AuthorizationException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, $exception->getMessage());
             }elseif ($exception instanceof AccessDeniedHttpException){
                 return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }elseif($exception instanceof UnauthorizedException){
+                return response()->error(Response::HTTP_UNAUTHORIZED, 'Unauthorized');
+            }elseif($exception instanceof AuthenticationException) {
+                return response()->error(Response::HTTP_UNAUTHORIZED, $exception->getMessage());
             }
         });
     }

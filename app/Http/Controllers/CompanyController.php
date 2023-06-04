@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController extends Controller
 {
+
     /**
      * Display the specified resource.
      *

@@ -31,11 +31,11 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('managing_partner', function ($user){
-            return $user->hasAnyRoles(['admin', 'managing_partner']);
+            return $user->hasAnyRole(['admin', 'managing_partner']);
         });
 
         Gate::define('staff', function ($user){
-            return $user->hasAnyRoles(['admin', 'managing_partner', 'staff']);
+            return $user->hasAnyRole(['admin', 'managing_partner', 'staff']);
         });
 
         Gate::define('user', function ($user){

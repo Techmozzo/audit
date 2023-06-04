@@ -14,7 +14,6 @@ use App\Models\Role;
 use App\Models\UserInvitation;
 use App\Services\Interfaces\RegistrationInterface;
 use App\Traits\HashId;
-use Carbon\Carbon;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,7 +32,7 @@ class Registration implements RegistrationInterface
     {
         $admin = $this->createAdmin->__invoke($request);
         $role = Role::where('name', 'admin')->first();
-        $admin->role()->attach($role->id, ['created_at' => now(), 'updated_at' => now()]);
+        $admin->assignRole($role->name);
         // RegistrationJob::dispatch($admin)->onQueue('audit_queue');
         // RegistrationJobAdmin::dispatch($admin, 'admin@techmozzo.com')->onQueue('audit_queue');
         RegistrationJob::dispatch($admin);
@@ -42,7 +41,9 @@ class Registration implements RegistrationInterface
             'access_token' => auth()->guard()->login($admin),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => new UserResource($admin)
+            'user' => new UserResource($admin),
+            'roles' => $admin->getRoleNames(),
+            'permissions' => $admin->getAllPermissions(),
         ];
     }
 

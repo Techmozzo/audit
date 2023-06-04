@@ -16,7 +16,7 @@ class CreateSubscriptionPackagesTable extends Migration
         Schema::create('subscription_packages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->integer('monthly_price');
             $table->integer('annual_price');
             $table->longText('feature');

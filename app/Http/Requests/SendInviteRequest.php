@@ -25,8 +25,7 @@ class SendInviteRequest extends ParentRequest
     {
         return [
             'email' => 'required|email|unique:user_invitations,email',
-            'name' => 'required|string',
-            'role_id' => 'required|integer'
+            'name' => 'required|string'
         ];
     }
 }

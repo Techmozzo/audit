@@ -21,7 +21,7 @@ class EngagementNoteFlagSeeder extends Seeder
         ];
 
         foreach($flags as $flag){
-            EngagementNoteFlag::create($flag);
+            EngagementNoteFlag::updateOrCreate(['name' => $flag['name']], ['description' => $flag['description']]);
         }
 
     }

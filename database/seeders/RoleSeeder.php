@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+
 
 class RoleSeeder extends Seeder
 {
@@ -15,13 +17,15 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $roles = [
-            ['name' => 'admin','description' => 'Owner of firm'],
-            ['name' => 'managing_partner','description' => 'Audit Partner'],
-            ['name' => 'staff','description' => 'Staff member'],
+            ['name' => 'admin', 'description' => 'Owner of firm'],
+            ['name' => 'managing_partner', 'description' => 'Audit Partner'],
+            ['name' => 'staff', 'description' => 'Staff member'],
         ];
 
-        foreach($roles as $role){
-            Role::create($role);
+        $permissions = Permission::get()->pluck('name')->toArray();
+        foreach ($roles as $role) {
+            $createdRole = Role::updateOrCreate(['name' => $role['name']], ['description' => $role['description']]);
+            $createdRole->syncPermissions($permissions);
         }
     }
 }

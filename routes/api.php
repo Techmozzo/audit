@@ -44,7 +44,6 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', LoginController::class);
     Route::post('logout', LogoutController::class);
     Route::post('register/admin', [RegisterController::class, 'admin']);
-    Route::post('register/company', [RegisterController::class, 'company'])->middleware('admin');
     Route::patch('forgot-password/{token}', [ForgotPasswordController::class, 'storeNewPassword']);
     Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::patch('reset-password', ResetPasswordController::class);
@@ -60,9 +59,12 @@ Route::get('audit-messages/{clientToken}', [MessageController::class, 'allMessag
 Route::post('audit-messages/{clientToken}', [MessageController::class, 'sendMessageByClient']);
 
 
-Route::group(['middleware' => 'admin'], function () {
+Route::group(['middleware' => ['role:admin']], function () {
+
     //Roles
     Route::get('roles', [RoleController::class, 'index']);
+    Route::post('roles/{roleId}', [RoleController::class, 'update']);
+    Route::get('roles/{roleId}/delete', [RoleController::class, 'delete']);
 
     // Users
     Route::get('users/invitations/pending', [UserInvitationController::class, 'getPendingInvites']);
@@ -81,10 +83,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('subscriptions', SubscriptionController::class);
 
     Route::get('company', [CompanyController::class, 'profile']);
+    Route::post('register/company', [RegisterController::class, 'company']);
     Route::post('company', [CompanyController::class, 'update']);
+
+    // DashBoard
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin']);
 });
 
-Route::group(['middleware' => 'user'], function () {
+Route::group(['middleware' => ['auth', 'api']], function () {
     //Permission management
     Route::post('user', [UserRoleController::class, 'userRole']);
     //User
@@ -98,7 +104,7 @@ Route::group(['middleware' => 'user'], function () {
     Route::get('clients/{client_id}/message-link', [MessageController::class, 'clientMessagingLink']);
     Route::resource('clients', ClientController::class);
 
-// Messages
+    // Messages
     Route::get('/messages/{message_id}', [MessageController::class, 'getMessage']);
 
 
@@ -128,17 +134,19 @@ Route::group(['middleware' => 'user'], function () {
     // Planning
     Route::resource('plannings', PlanningController::class);
 
-    // DashBoard
-    Route::get('/dashboard', [DashboardController::class, 'data']);
-
     Route::get('/index', IndexController::class);
 
     // Upload Document
     Route::post('upload', FileUploadController::class);
+
+
+    Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
+    Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
 });
 
-
-Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
-Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
+Route::group(['middleware' => ['auth', 'role:staff']], function () {
+    // DashBoard
+    Route::get('/staff/dashboard', [DashboardController::class, 'staff']);
+});
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
