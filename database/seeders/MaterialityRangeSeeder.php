@@ -20,7 +20,10 @@ class MaterialityRangeSeeder extends Seeder
         ];
 
         foreach($ranges as $range){
-            MaterialityRange::create($range);
+            MaterialityRange::updateOrCreate(
+                ['name' => $range['name']],
+                ['lower_limit' => $range['lower_limit'], 'upper_limit' => $range['upper_limit'], 'description' => $range['description']],
+            );
         }
 
     }

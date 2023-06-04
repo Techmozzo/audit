@@ -20,8 +20,8 @@ class CreateUserInvitationsTable extends Migration
             $table->integer('status')->default(0);
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->unsignedInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -10,6 +10,6 @@ class UserInvitation extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['email', 'name', 'status', 'company_id', 'role_id'];
+    protected $fillable = ['email', 'name', 'status', 'company_id','role_id'];
 
 }

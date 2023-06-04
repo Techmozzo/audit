@@ -20,7 +20,10 @@ class SubscriptionPackageSeeder extends Seeder
         ];
 
         foreach($packages as $package){
-            SubscriptionPackage::create($package);
+            SubscriptionPackage::updateOrCreate(
+                ['name' => $package['name']],
+                ['monthly_price' => $package['monthly_price'], 'annual_price' => $package['annual_price'], 'description' => $package['description'], 'feature' => $package['feature']],
+            );
         }
     }
 }

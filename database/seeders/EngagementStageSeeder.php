@@ -21,7 +21,7 @@ class EngagementStageSeeder extends Seeder
         ];
 
         foreach($stages as $stage){
-            EngagementStage::create($stage);
+            EngagementStage::updateOrCreate(['name' => $stage['name']], ['description' => $stage['description']]);
         }
 
     }

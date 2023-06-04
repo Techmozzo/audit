@@ -19,10 +19,14 @@ class UserInvitationController extends Controller
 
     public function sendInvite(SendInviteRequest $request){
         $company = auth()->user()->company;
+        if(!$company){
+            return response()->error(Response::HTTP_NOT_FOUND, 'No company found. Create a company before inviting users');
+        }
         $invitedUser = UserInvitation::create($request->all() + ['company_id' => $company->id]);
         $role = Role::find($request->role_id);
         $data = ['role' => $role->name, 'token' => $this->encrypt($invitedUser->id)['data_token'], 'company' => $company->name] + $request->all();
-        UserInvitationJob::dispatchIf( $role !== null, $data)->onQueue('audit_queue');
+        // UserInvitationJob::dispatchIf( $role !== null, $data)->onQueue('audit_queue');
+        UserInvitationJob::dispatchIf( $role !== null, $data);
         return response()->success(Response::HTTP_CREATED, 'Invitation sent successful', ['invitedUser' => $invitedUser]);
     }
 
@@ -45,14 +49,20 @@ class UserInvitationController extends Controller
             $invitedUser = UserInvitation::find($token['data_id']);
             $response = response()->error(Response::HTTP_BAD_REQUEST, 'Invitation does not exist.');
             if($invitedUser !== null){
+                $role = Role::find($invitedUser->role_id);
+                if(!$role){
+                    return response()->error(Response::HTTP_BAD_REQUEST, 'Role not found.');
+                }
                 $user = $createUser($invitedUser->company_id, $request->all());
-                $user->role()->attach($invitedUser->role_id, ['created_at' => now(), 'updated_at' => now()]);
+                $user->assignRole($role->name);
                 $invitedUser->update(['status' => 1]);
                 $data = [
                     'access_token' => auth()->guard()->login($user),
                     'token_type' => 'bearer',
                     'expires_in' => auth()->factory()->getTTL() * 60,
-                    'user' => new UserResource($user)
+                    'user' => new UserResource($user),
+                    'roles' => $user->getRoleNames(),
+                    'permissions' => $user->getAllPermissions(),
                 ];
                 $response = response()->success(Response::HTTP_CREATED, 'Registration Successful', $data);
             }

@@ -24,7 +24,9 @@ class LoginController extends Controller
             'access_token' => auth()->guard()->login($user),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
+            'roles' => $user->getRoleNames(),
+            'permissions' => $user->getAllPermissions(),
         ];
 
         return response()->success(Response::HTTP_OK, 'Login Successful', $data);
