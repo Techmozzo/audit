@@ -26,6 +26,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TransactionTestController;
 use App\Http\Controllers\UsersController;
 
@@ -142,6 +143,12 @@ Route::group(['middleware' => ['auth', 'api']], function () {
 
     Route::get('engagements/accept-invite/{token}', [EngagementInviteController::class, 'accept']);
     Route::get('engagements/decline-invite/{token}', [EngagementInviteController::class, 'decline']);
+
+    Route::group(['prefix' => 'notifications'], function () {
+        Route::get('/', [NotificationController::class, 'index']);
+        Route::get('/read', [NotificationController::class, 'read']);
+        Route::get('/read-all', [NotificationController::class, 'readAll']);
+    });
 });
 
 Route::group(['middleware' => ['auth', 'role:staff']], function () {
