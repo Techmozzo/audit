@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
+        "cloudinary/cloudinary_php": "^2.11",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "hashids/hashids": "^4.1",
@@ -37,7 +38,8 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": ["app/helpers.php"]
     },
     "scripts": {
         "post-autoload-dump": [
