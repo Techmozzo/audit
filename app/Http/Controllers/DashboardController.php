@@ -36,7 +36,6 @@ class DashboardController extends Controller
             'unreadNotifications' => $unreadNotifications,
             'unreadNotificationsCount' => $unreadNotificationsCount
         ];
-
         return response()->success(Response::HTTP_OK, 'Request successful', $data);
     }
 
@@ -66,7 +65,6 @@ class DashboardController extends Controller
             'unreadNotifications' => $unreadNotifications,
             'unreadNotificationsCount' => $unreadNotificationsCount
         ];
-
         return response()->success(Response::HTTP_OK, 'Request successful', $data);
     }
 

@@ -39,6 +39,7 @@ class EngagementInvite
                 // ->onQueue('audit_queue');
                 DB::commit();
                 //Activity Log
+                
             } catch (Throwable $t) {
                 DB::rollBack();
                 Log::error(['Error-On-Engagement-Invite' => $t->getMessage()]);

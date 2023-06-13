@@ -35,6 +35,12 @@ class ForgotPasswordController extends Controller
         if (isset($decoded['data_id'])) {
             $user = User::find($decoded['data_id']);
             $user->update(['password' => bcrypt($request->password)]);
+            logAction([
+                'name' => "Password Reset",
+                'description' => "User Password Reset: ". $user->name,
+                'properties' => $user->id,
+                'causer_id' => $user->id
+            ]);
             $data = response()->success(Response::HTTP_OK, 'Password reset successful');
         }
         return $data;

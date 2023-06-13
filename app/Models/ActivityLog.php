@@ -11,7 +11,7 @@ class ActivityLog extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'action_id', 'action_type', 'causee_id', 'causer_id', 'causer_type', 'properties', 'is_active', 'company_id', 'ip'
+        'name', 'description', 'action_id', 'action_type', 'causee_id', 'causer_id', 'causer_role', 'is_active', 'company_id', 'ip'
     ];
 
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];

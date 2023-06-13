@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
+use App\Http\Controllers\EngagementTeamRolesController;
 use App\Http\Controllers\ExecutionController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\IndexController;
@@ -72,7 +74,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('users/invitations', [UserInvitationController::class, 'getInvitedUsers']);
     Route::get('users', [UsersController::class, 'getAllUsers']);
 
-
     //Permission management
     Route::get('users-role', [UserRoleController::class, 'companyUsersRole']);
     Route::post('assign-role', [UserRoleController::class, 'assignRoleToUser']);
@@ -89,6 +90,12 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     // DashBoard
     Route::get('/admin/dashboard', [DashboardController::class, 'admin']);
+
+    // DashBoard
+    Route::match(['post', 'get'], '/activity-logs', [ActivityLogController::class, 'logs']);
+
+    //Engagement Roles
+    Route::get('engagement-roles', [EngagementTeamRolesController::class, 'index']);
 });
 
 Route::group(['middleware' => ['auth', 'api']], function () {
@@ -155,5 +162,3 @@ Route::group(['middleware' => ['auth', 'role:staff']], function () {
     // DashBoard
     Route::get('/staff/dashboard', [DashboardController::class, 'staff']);
 });
-
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

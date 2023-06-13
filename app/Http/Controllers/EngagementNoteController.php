@@ -30,7 +30,7 @@ class EngagementNoteController extends Controller
     {
         $user = auth()->user();
         $engagement = $this->findEngagement->__invoke($engagementId);
-        $note = $engagement->note()->create(['message' => $request->message, 'engagement_stage_id' => $engagement->status->id, 'engagement_note_flag_id' => $request->engagement_note_flag_id, 'user_id' => $user->id, 'company_id' => $user->company_id]);
+        $note = $engagement->note()->create(['message' => $request->message, 'engagement_stage_id' => $engagement->status, 'engagement_note_flag_id' => $request->engagement_note_flag_id, 'user_id' => $user->id, 'company_id' => $user->company_id]);
         return response()->success(Response::HTTP_CREATED, 'Request Successful', ['note' => $note]);
     }
 
