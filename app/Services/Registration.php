@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Services\Concretes;
+namespace App\Services;
 
 use App\Actions\CreateAdmin;
 use App\Http\Resources\UserResource;
+use App\Interfaces\RegistrationInterface;
 use App\Jobs\CompanyRegistrationJob;
 use App\Jobs\CompanyRegistrationJobAdmin;
 use App\Jobs\ManagingPartnerInvitationJob;
@@ -12,7 +13,6 @@ use App\Jobs\RegistrationJobAdmin;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\UserInvitation;
-use App\Services\Interfaces\RegistrationInterface;
 use App\Traits\HashId;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,13 +37,21 @@ class Registration implements RegistrationInterface
         // RegistrationJobAdmin::dispatch($admin, 'admin@techmozzo.com')->onQueue('audit_queue');
         RegistrationJob::dispatch($admin);
         RegistrationJobAdmin::dispatch($admin, env('ADMIN_EMAIL'));
+
+        logAction([
+            'name' => "Admin Registration",
+            'description' => $admin->name ." Registered on Audit Tool",
+            'properties' => $admin->id,
+            'causer_id' => $admin->id
+        ]);
+
         return [
             'access_token' => auth()->guard()->login($admin),
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => new UserResource($admin),
-            'roles' => $admin->getRoleNames(),
-            'permissions' => $admin->getAllPermissions(),
+            'roles' => $user->getRoleNames(),
+            'permissions' => $user->getAllPermissions(),
         ];
     }
 
@@ -74,6 +82,14 @@ class Registration implements RegistrationInterface
         $company->phone = $request['company_phone'];
         $company->techmozzo_id = 'TM' . rand(100, 999) . rand(1000, 9999) . 'AT';
         $company->save();
+
+        logAction([
+            'name' =>  "Comapny Registration",
+            'description' => auth()->user()->name . " Registed " . $company->name,
+            'properties' => $company->id,
+            'causer_id' => auth()->user()->id
+        ]);
+
         return $company;
     }
 
@@ -90,6 +106,13 @@ class Registration implements RegistrationInterface
             $token = $this->encrypt($invitedUser->id)['data_token'];
             // ManagingPartnerInvitationJob::dispatch($request, 'Managing Partner', $token)->onQueue('audit_queue');
             ManagingPartnerInvitationJob::dispatch($request, 'Managing Partner', $token);
+
+            logAction([
+                'name' =>  "Managing Partner Invite",
+                'description' => auth()->user()->name . " Invited " .$request['managing_partner_name'] . " as Managing Partner for " . $company->name,
+                'properties' => $invitedUser->id,
+                'causer_id' => auth()->user()->id
+            ]);
         }
     }
 }

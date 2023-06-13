@@ -19,15 +19,14 @@ class CreateActivityLogsTable extends Migration
             $table->string('description');
             $table->unsignedInteger('causer_id')->nullable()->index();
             $table->foreign('causer_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->string('causer_role')->nullable();
             $table->unsignedInteger('causee_id')->nullable()->index();
             $table->foreign('causee_id')->references('id')->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->string('causer_type')->nullable();
-            $table->string('user_type')->nullable();
+            $table->unsignedInteger('action_id')->nullable();
             $table->string('action_type')->nullable();
-            $table->text('properties')->nullable();
             $table->boolean('is_active')->default(1)->index();
             $table->string('ip')->nullable();
-            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
             $table->softDeletes();

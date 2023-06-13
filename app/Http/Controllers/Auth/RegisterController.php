@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRegistrationRequest;
 use App\Http\Requests\CompanyRegistrationRequest;
-use App\Services\Interfaces\RegistrationInterface;
+use App\Interfaces\RegistrationInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller

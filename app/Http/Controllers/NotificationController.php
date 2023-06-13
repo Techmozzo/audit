@@ -22,7 +22,7 @@ class NotificationController extends Controller
             $filterValue = ($request->filter == NotificationStatus::ALL) ? null : $request->filter;
         }
 
-        $datesearch = $request->has('datesearch') && $request->datesearch==1 ? true : false;
+        $datesearch = $request->has('datesearch') && $request->datesearch == 1 ? true : false;
         $filter_action = $request->has('filteraction') ? $request->filteraction : '';
 
         if ($request->has('daterange')) {
@@ -33,7 +33,7 @@ class NotificationController extends Controller
         $notifications = getallNotifications(auth()->user()->id, $filterValue, $filter_action, $request->has('daterange') && $datesearch ? DateUtil::dateRange($daterange) : []);
         $model_filters = getNotificationTypeFilters(auth()->user()->id);
 
-        return response()->success(Response::HTTP_OK, 'Request successful',[ 'filterValue' => $filterValue, 'notifications' => $notifications, 'daterange' => $daterange, 'model_filters' => $model_filters , 'filter_action' => $filter_action]);
+        return response()->success(Response::HTTP_OK, 'Request successful', ['filterValue' => $filterValue, 'notifications' => $notifications, 'daterange' => $daterange, 'model_filters' => $model_filters, 'filter_action' => $filter_action]);
     }
 
     public function read(Request $request)
@@ -42,11 +42,12 @@ class NotificationController extends Controller
         if ($notification) {
             $notification->markAsRead();
 
-            $log_action['name'] = "Read notification";
-            $log_action['description'] = "Read notification: " . ucwords($notification->data['title']);
-            $log_action['properties'] = $notification->id;
-            $log_action['causer_id'] = auth()->user()->id;
-            logAction($log_action);
+            logAction([
+                'name' => "Read notification",
+                'description' => "Read notification: " . ucwords($notification->data['title']),
+                'properties' => $notification->id,
+                'causer_id' => auth()->user()->id
+            ]);
         }
         return response()->success(Response::HTTP_OK, 'Request successful');
     }
@@ -59,12 +60,13 @@ class NotificationController extends Controller
     {
         $user = auth()->user();
         $user->unreadNotifications->markAsRead();
-        
-        $log_action['name'] = "Marked all notifications as read";
-        $log_action['description'] = "Marked all notifications as read";
-        $log_action['causer_id'] = auth()->user()->id;
 
-        logAction($log_action);
+        logAction([
+            'name' => "Marked all notifications as read",
+            'description' => "Marked all notifications as read",
+            'causer_id' => auth()->user()->id
+        ]);
+
         return response()->success(Response::HTTP_OK, 'Notifications marked as read');
     }
 }
