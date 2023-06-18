@@ -24,9 +24,9 @@ class CreateClientsTable extends Migration
             $table->unique(['company_id', 'phone']);
             $table->string('address')->nullable();
             $table->string('registered_address')->nullable();
-            $table->integer('is_public_entity')->default(0);
+            $table->unsignedSmallInteger('is_public_entity')->default(0);
             $table->text('nature_of_business');
-            $table->integer('status')->default(1);
+            $table->unsignedSmallInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -25,22 +25,22 @@ class MaterialityRequest extends ParentRequest
     {
         return [
 
-            'materiality_benchmark_amount' => 'required|integer',
+            'materiality_benchmark_amount' => 'required|numeric|between:0,999999999999999.99',
             'materiality_benchmark_reason' => 'required|string',
 
             'overall_materiality_level_id' => 'required|integer|different:performance_materiality_level_id|different:threshold_level_id',
-            'overall_materiality_limit' => 'required|integer',
-            'overall_materiality_amount' => 'required|integer',
+            'overall_materiality_limit' => 'required|numeric|between:0,999999999999999.99',
+            'overall_materiality_amount' => 'required|numeric|between:0,999999999999999.99',
             'overall_materiality_reason' => 'required|string',
 
             'performance_materiality_level_id' => 'required|integer|different:overall_materiality_level_id|different:threshold_level_id',
-            'performance_materiality_limit' => 'required|integer',
-            'performance_materiality_amount' => 'required|integer',
+            'performance_materiality_limit' => 'required|numeric|between:0,999999999999999.99',
+            'performance_materiality_amount' => 'required|numeric|between:0,999999999999999.99',
             'performance_materiality_reason' => 'required|string',
 
             'threshold_level_id' => 'required|integer|different:performance_materiality_level_id|different:overall_materiality_level_id',
-            'threshold_limit' => 'required|integer',
-            'threshold_amount' => 'required|integer',
+            'threshold_limit' => 'required|numeric|between:0,999999999999999.99',
+            'threshold_amount' => 'required|numeric|between:0,999999999999999.99',
             'threshold_reason' => 'required|string',
         ];
     }

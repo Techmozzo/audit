@@ -25,7 +25,7 @@ class CreateExecutionsTable extends Migration
             $table->text('party_transaction_review');
             $table->text('expert_work_review');
             $table->text('other_estimate_review');
-            $table->integer('status')->default(0);
+            $table->unsignedSmallInteger('status')->default(0);
             $table->timestamps();
         });
     }

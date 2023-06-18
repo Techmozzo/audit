@@ -41,11 +41,12 @@ class EngagementInviteNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $accept = env('APP_URL').'/engagements/accept-invite/'. $this->data->token;
-        $decline = env('APP_URL').'/engagements/decline-invite/'. $this->data->token;
+        $accept = env('APP_URL').'/app/engagements/accept-invite/'. $this->data->token;
+        $decline = env('APP_URL').'/app/engagements/decline-invite/'. $this->data->token;
         $link = '';
         return (new MailMessage)
         ->subject('Invite to ' . $this->data->invite->engagement->name . ' Engagement')
+        ->from('support@ea-audit.com', 'Techmozzo')
         ->greeting('Hello ' . $this->data->invite->user->first_name . '!')
         ->line($this->data->invite->company->name . " Has invited you to join the audit team for " . $this->data->invite->engagement->name . " Engagement as a " . $this->data->role->name)
         ->action('Accept', $accept)
@@ -63,7 +64,7 @@ class EngagementInviteNotification extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        $link = env('APP_URL')."/engagements/".encrypt($this->data->invite->engagement->id)."/invites/".encrypt($this->data->invite->id);
+        $link = env('APP_URL')."/app/engagements/".encrypt($this->data->invite->engagement->id)."/invites/".encrypt($this->data->invite->id);
 		return [
 			'link' => $link,
 			'title' => 'Invite to' . $this->data->invite->engagement->name . ' Engagement',

@@ -23,7 +23,7 @@ class CreateEngagementInvitesTable extends Migration
             $table->foreign('engagement_team_role_id')->references('id')->on('engagement_team_roles');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->integer('status')->default(0);
+            $table->unsignedSmallInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

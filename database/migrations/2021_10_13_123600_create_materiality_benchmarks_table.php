@@ -16,7 +16,7 @@ class CreateMaterialityBenchmarksTable extends Migration
         Schema::create('materiality_benchmarks', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('planning_id');
-            $table->foreign('planning_id')->references('id')->on('plannings')->onDelete('cascade');
+            $table->foreign('planning_id')->references('id')->on('plannings');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->decimal('amount', 17, 2);

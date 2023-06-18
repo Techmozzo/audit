@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\StoreImageToCloud;
 use App\Actions\UpdateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,12 +21,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StoreImageToCloud $storeImageToCloud, UpdateUser $updateUser)
+    public function update(Request $request)
     {
         $response = response()->success(Response::HTTP_NOT_FOUND, 'User does not exist.');
         $user = User::where('id', auth()->id())->first();
         if ($user !== null) {
-            $updateUser($request, $user, $storeImageToCloud);
+            $url = [];
+            if(isset($request->dp)) $url['dp'] = $storeImageToCloud($request->dp);
+            $user->update($request->except(['dp','is_verified','email', 'company_id']) + $url);
             $response = response()->success(Response::HTTP_ACCEPTED, 'Update Successful', ['user' => $user]);
         }
         return $response;

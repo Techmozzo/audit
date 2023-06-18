@@ -28,7 +28,7 @@ class CreateConclusionsTable extends Migration
             $table->text('audit_report');
             $table->text('audited_financial_statement');
             $table->text('other_financial_info');
-            $table->integer('status')->default(0);
+            $table->unsignedSmallInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateSubscriptionPackagesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->integer('monthly_price');
-            $table->integer('annual_price');
+            $table->decimal('monthly_price', 8, 2, true);
+            $table->decimal('monthly_price', 8, 2, true);
             $table->longText('feature');
             $table->timestamps();
         });
