@@ -17,7 +17,7 @@ class CreateUserInvitationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->integer('status')->default(0);
+            $table->unsignedSmallInteger('status')->default(0);
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('role_id');

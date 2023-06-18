@@ -38,7 +38,7 @@ class Engagement extends Model
     }
 
     public function teamMembers(){
-        return $this->hasMany(EngagementTeamMembers::class)->select('id','user_id', 'engagement_team_role_id', 'company_id', 'engagement_id');
+        return $this->hasMany(EngagementTeamMembers::class)->select('id','user_id', 'engagement_team_role_id', 'company_id', 'engagement_id','created_at');
     }
 
     public function status(){

@@ -15,7 +15,7 @@ class CreateSubscriptionRecordsTable extends Migration
     {
         Schema::create('subscription_records', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('amount');
+            $table->decimal('amount', 8, 2, true);
             $table->integer('duration');
             $table->string('payment_reference');
             $table->unsignedInteger('company_id');

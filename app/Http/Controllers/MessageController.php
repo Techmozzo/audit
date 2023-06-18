@@ -69,7 +69,7 @@ class MessageController extends Controller
 
     public function clientMessagingLink($clientId)
     {
-        $link = 'http://localhost:8000/audit-messages/'.$this->encrypt($clientId)['data_token'];
+        $link = env('APP_URL')."/audit-messages/".$this->encrypt($clientId)['data_token'];
         return response()->success(Response::HTTP_OK, 'Request Successful', ['link' => $link]);
     }
 }

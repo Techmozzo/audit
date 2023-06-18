@@ -24,7 +24,7 @@ class CreateMessagesTable extends Migration
             $table->string('title');
             $table->text('message');
             $table->string('sender');
-            $table->integer('status')->default(0);
+            $table->unsignedSmallInteger('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
