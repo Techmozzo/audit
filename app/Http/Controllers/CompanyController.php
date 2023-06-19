@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\StoreImageToCloud;
-use App\Actions\UpdateCompany;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,14 +36,13 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StoreImageToCloud $storeImageToCloud, UpdateCompany $updateCompany)
+    public function update(Request $request)
     {
-        $response = response()->success(Response::HTTP_NOT_FOUND, 'Company does not exist.');
         $company = Company::where('id', auth()->user()->company_id)->first();
-        if ($company !== null) {
-            $updateCompany($request, $company, $storeImageToCloud);
-            $response = response()->success(Response::HTTP_ACCEPTED, 'Update Successful', ['company' => $company]);
+        if(!$company){
+            return response()->success(Response::HTTP_NOT_FOUND, 'Company does not exist.');
         }
-        return $response;
+        $company->update($request->all());
+        return response()->success(Response::HTTP_ACCEPTED, 'Update Successful', ['company' => $company]);
     }
 }

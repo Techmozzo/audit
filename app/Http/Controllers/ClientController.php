@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CreateClient;
-use App\Actions\FindClient;
+use App\Actions\Finder;
 use App\Http\Requests\ClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
@@ -40,9 +40,9 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show($clientId, FindClient $findClient)
+    public function show($clientId)
     {
-        $client = $findClient($clientId);
+        $client = Finder::client($clientId);
         return response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
     }
 
@@ -52,9 +52,9 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $clientId, FindClient $findClient)
+    public function update(Request $request,  $clientId)
     {
-        $client = $findClient($clientId);
+        $client = Finder::client($clientId);
             $client->update($request->all());
             return response()->success(Response::HTTP_OK, 'Request successfully', ['client' => $client]);
     }
