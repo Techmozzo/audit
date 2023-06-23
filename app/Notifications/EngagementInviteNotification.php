@@ -41,8 +41,8 @@ class EngagementInviteNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $accept = env('APP_URL').'/app/engagements/accept-invite/'. $this->data->token;
-        $decline = env('APP_URL').'/app/engagements/decline-invite/'. $this->data->token;
+        $accept = env('FRONTEND_APP_URL').'/app/engagements/accept-invite/'. $this->data->token;
+        $decline = env('FRONTEND_APP_URL').'/app/engagements/decline-invite/'. $this->data->token;
         $link = '';
         return (new MailMessage)
         ->subject('Invite to ' . $this->data->invite->engagement->name . ' Engagement')
@@ -50,7 +50,7 @@ class EngagementInviteNotification extends Notification implements ShouldQueue
         ->greeting('Hello ' . $this->data->invite->user->first_name . '!')
         ->line($this->data->invite->company->name . " Has invited you to join the audit team for " . $this->data->invite->engagement->name . " Engagement as a " . $this->data->role->name)
         ->action('Accept', $accept)
-        ->line("Decline Invitation by clicking <a href=$decline target=_blank>")
+        ->line("Decline Invitation by clicking <a href=$decline target=_blank> here. </a>")
         ->line('Reach out to Techmozzo Support if you have any complaints or enquiries.')
         ->salutation('Thanks')
         ->markdown('notifications.mail', compact('notifiable'));

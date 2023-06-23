@@ -32,7 +32,6 @@ class LoginController extends Controller
         logAction([
             'name' => "Login",
             'description' => "User Login: ". $user->name,
-            'properties' => $user->id,
             'causer_id' => $user->id,
         ]);
 

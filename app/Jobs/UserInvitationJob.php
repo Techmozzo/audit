@@ -36,9 +36,9 @@ class UserInvitationJob implements ShouldQueue
         $subject = $this->data['company'] . ' Audit Invite.';
         $heading = 'Audit Invite';
         $body = $this->data['company']." Has created an audit profile on Techmozzo audit and has invited you.
-            <br/><br/><b><a href=".env('APP_URL')."/app/invited-user-registration/".$this->data['token'].">Accept Invitation</a></b><br />
-            If the button doesn't work, copy and paste the URL in your browser's address bar: <br /> <br />"
-            .env('APP_URL')."/app/invited-user-registration/".$this->data['token']."
+            <br/><br/><b><a href=".env('FRONTEND_APP_URL')."/invited-user-registration/".$this->data['token'].">Accept Invitation</a></b><br />
+            If the button doesn't work, copy and paste the URL in your browser's address bar: <br /> <br />
+            ".env('FRONTEND_APP_URL')."/invited-user-registration/".$this->data['token']."
             <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks.";
 
         Mail::to($this->data['email'])->send(new SendEmail($this->data['name'], $subject, $heading, $body));

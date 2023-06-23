@@ -18,6 +18,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConclusionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EngagementApprovalController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\EngagementInviteController;
 use App\Http\Controllers\EngagementNoteController;
@@ -91,7 +92,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     // DashBoard
     Route::get('/admin/dashboard', [DashboardController::class, 'admin']);
 
-    // DashBoard
+    // Log
     Route::match(['post', 'get'], '/activity-logs', [ActivityLogController::class, 'logs']);
 
     //Engagement Roles
@@ -131,6 +132,9 @@ Route::group(['middleware' => ['auth', 'api']], function () {
     // Conclusions
     Route::resource('engagements/{engagementId}/conclusions', ConclusionController::class);
 
+    // Approve Engagement Stages
+    Route::get('engagements/{engagementId}/approve', [EngagementApprovalController::class, 'approve']);
+
 
     // Engagement Invite
     Route::post('engagements/{engagementId}/send-invite', [EngagementInviteController::class, 'send']);
@@ -158,7 +162,7 @@ Route::group(['middleware' => ['auth', 'api']], function () {
     });
 });
 
-Route::group(['middleware' => ['auth', 'role:staff']], function () {
+Route::group(['middleware' => ['auth', 'role:staff|managing_partner']], function () {
     // DashBoard
     Route::get('/staff/dashboard', [DashboardController::class, 'staff']);
 });

@@ -11,16 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EngagementNoteController extends Controller
 {
-    protected $findEngagement;
-
-    public function __construct(FindEngagement $findEngagement)
-    {
-        $this->findEngagement = $findEngagement;
-    }
 
     public function index($engagementId)
     {
-        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement = FindEngagement::find($engagementId);
         $notes = EngagementNote::where('engagement_id', $engagement->id)->get();
         return response()->success(Response::HTTP_OK, 'Request Successful', ['notes' => $notes]);
     }
@@ -29,7 +23,7 @@ class EngagementNoteController extends Controller
     public function store(EngagementNoteRequest $request, $engagementId)
     {
         $user = auth()->user();
-        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement = FindEngagement::find($engagementId);
         $note = $engagement->note()->create(['message' => $request->message, 'engagement_stage_id' => $engagement->status, 'engagement_note_flag_id' => $request->engagement_note_flag_id, 'user_id' => $user->id, 'company_id' => $user->company_id]);
         return response()->success(Response::HTTP_CREATED, 'Request Successful', ['note' => $note]);
     }

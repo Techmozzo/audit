@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\StoreImageToCloud;
 use App\Factories\UploadFileFactory;
 use App\Http\Requests\FileUploadRequest;
 use Symfony\Component\HttpFoundation\Response;

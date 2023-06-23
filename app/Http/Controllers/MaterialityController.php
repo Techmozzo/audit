@@ -28,6 +28,7 @@ class MaterialityController extends Controller
      */
     public function store(MaterialityRequest $request, $planningId, CreateMateriality $createMateriality)
     {
+        
         $data = $createMateriality->execute($request, $planningId);
         return response()->success(Response::HTTP_CREATED, 'Materiality Created Successfully', [$data]);
     }

@@ -18,7 +18,7 @@ class CreateSubscriptionPackagesTable extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->decimal('monthly_price', 8, 2, true);
-            $table->decimal('monthly_price', 8, 2, true);
+            $table->decimal('annual_price', 8, 2, true);
             $table->longText('feature');
             $table->timestamps();
         });

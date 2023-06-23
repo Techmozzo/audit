@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\FindEngagement;
+use App\Actions\Finder;
 use App\Http\Requests\EngagementRequest;
 use App\Models\Client;
 use App\Models\Engagement;
@@ -14,13 +14,6 @@ class EngagementController extends Controller
 
     protected $attribute = ['id','company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard',
      'external_expert', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status'];
-
-    protected $findEngagement;
-
-    public function __construct(FindEngagement $findEngagement)
-    {
-        $this->findEngagement = $findEngagement;
-    }
 
     public function index()
     {
@@ -54,7 +47,7 @@ class EngagementController extends Controller
      */
     public function show($engagementId)
     {
-        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement = Finder::engagement($engagementId);
         return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
     }
 
@@ -66,9 +59,8 @@ class EngagementController extends Controller
      */
     public function update(Request $request, $engagementId)
     {
-        $engagement = $this->findEngagement->__invoke($engagementId);
+        $engagement = Finder::engagement($engagementId);
         $engagement->update($request->all());
-        dd(tap($engagement)->update($request->all()));
         return response()->success(Response::HTTP_OK, 'Request successfully', ['engagement' => $engagement]);
 
     }
