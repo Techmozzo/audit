@@ -50,8 +50,8 @@ class Registration implements RegistrationInterface
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => new UserResource($admin),
-            'roles' => $user->getRoleNames(),
-            'permissions' => $user->getAllPermissions(),
+            'roles' => $admin->getRoleNames(),
+            'permissions' => $admin->getAllPermissions(),
         ];
     }
 
