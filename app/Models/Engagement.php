@@ -9,7 +9,7 @@ class Engagement extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'sufficient_staff_power', 'partner_skill', 'external_expert', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status'];
+    protected $fillable = ['company_id', 'client_id', 'name', 'year', 'first_time', 'audit_id', 'engagement_letter', 'accounting_standard', 'auditing_standard', 'sufficient_staff_power', 'partner_skill', 'external_expert', 'appointment_letter', 'contacted_previous_auditor', 'previous_auditor_response',  'previous_audit_opinion','previous_audit_review', 'other_audit_opinion', 'previous_year_management_letter', 'previous_year_asf', 'status_id'];
 
     public function client(){
         return $this->belongsTo(Client::class);
@@ -28,11 +28,11 @@ class Engagement extends Model
     }
 
     public function execution(){
-        return $this->hasMany(Execution::class);
+        return $this->hasOne(Execution::class);
     }
 
     public function conclusion(){
-        return $this->hasMany(Conclusion::class);
+        return $this->hasOne(Conclusion::class);
     }
 
     public function teamMembers(){
@@ -40,6 +40,6 @@ class Engagement extends Model
     }
 
     public function status(){
-        return $this->belongsTo(EngagementStage::class, 'status', 'id')->select('id','name');
+        return $this->belongsTo(EngagementStage::class, 'status_id');
     }
 }

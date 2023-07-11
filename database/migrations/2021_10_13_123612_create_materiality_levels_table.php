@@ -16,10 +16,9 @@ class CreateMaterialityLevelsTable extends Migration
         Schema::create('materiality_levels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('type')->nullable();
             $table->decimal('lower_limit', 5, 2);
             $table->decimal('upper_limit', 5, 2);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

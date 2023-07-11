@@ -9,7 +9,10 @@ class Assertion extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'transaction_test_id','company_id','completeness','existence','accuracy','valuation','obligation_right','disclosure_presentation'
-    ];
+    protected $fillable = ['id', 'name', 'description'];
+
+    public function procedures(){
+        return $this->belongsToMany(Procedure::class, 'procedure_assertions');
+    }
+    
 }

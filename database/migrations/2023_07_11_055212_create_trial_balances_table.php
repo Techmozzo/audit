@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssertionsTable extends Migration
+class CreateTrialBalancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateAssertionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assertions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
+        Schema::create('trial_balances', function (Blueprint $table) {
+            $table->id();
+            $table->string('classes')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateAssertionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assertions');
+        Schema::dropIfExists('trial_balances');
     }
 }

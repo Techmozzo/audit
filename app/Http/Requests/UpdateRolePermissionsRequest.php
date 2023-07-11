@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
-class TransactionClassRequest extends ParentRequest
+class UpdateRolePermissionsRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class TransactionClassRequest extends ParentRequest
      */
     public function authorize()
     {
-        return false;
+        return Gate::allows('admin');
     }
 
     /**
@@ -24,7 +24,8 @@ class TransactionClassRequest extends ParentRequest
     public function rules()
     {
         return [
-            //
+            'permissions' => 'required|array',
+            'permissions.*' => 'required|integer|distinct'
         ];
     }
 }

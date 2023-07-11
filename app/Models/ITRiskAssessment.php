@@ -9,5 +9,5 @@ class ITRiskAssessment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['planning_id','company_id','name','function','review_performed'];
+    protected $fillable = ['planning_id','company_id','status','name','function','review_performed'];
 }

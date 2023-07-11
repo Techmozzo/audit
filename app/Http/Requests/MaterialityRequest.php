@@ -26,6 +26,7 @@ class MaterialityRequest extends ParentRequest
         return [
 
             'materiality_benchmark_amount' => 'required|numeric|between:0,999999999999999.99',
+            'materiality_benchmark_range_id' => 'required|integer',
             'materiality_benchmark_reason' => 'required|string',
 
             'overall_materiality_level_id' => 'required|integer|different:performance_materiality_level_id|different:threshold_level_id',

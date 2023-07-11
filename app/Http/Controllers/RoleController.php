@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateRolePermissionsRequest;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller
@@ -14,13 +15,20 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return response()->success(Response::HTTP_OK, 'Request Successful', ['roles' => Role::get(['name', 'description'])]);
+        $roles =  Role::with('permissions:id,name')->get(['id','name', 'description']);
+        $permissions = Permission::all();
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['roles' => $roles, 'permissions' => $permissions]);
     }
 
-    public function update(Request $request, $roleId)
+    public function update(UpdateRolePermissionsRequest $request, $roleId)
     {
-        $update = Role::where('id', $roleId)->update($request->all());
-        if(!$update){
+        $role = Role::find($roleId);
+        if(!$role){
+            return response()->error(Response::HTTP_NOT_FOUND, "$role not found.");
+        }
+        $permissions = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+        $update = $role->syncPermissions($permissions);
+        if (!$update) {
             return response()->error(Response::HTTP_NOT_FOUND, 'Unable to update role.');
         }
         return response()->success(Response::HTTP_OK, 'Request Successful');
@@ -29,10 +37,9 @@ class RoleController extends Controller
     public function delete($roleId)
     {
         $userHasRole = DB::table('model_has_roles')->where('role_id', $roleId)->first();
-        if($userHasRole){
+        if ($userHasRole) {
             return response()->error(Response::HTTP_BAD_REQUEST, 'A user exist with this role or a pe.');
         }
         return response()->success(Response::HTTP_OK, 'Request Successful');
     }
-
 }

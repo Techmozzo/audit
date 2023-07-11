@@ -18,7 +18,7 @@ class CreateMaterialityRangesTable extends Migration
             $table->string('name');
             $table->decimal('lower_limit', 4, 2);
             $table->decimal('upper_limit', 4, 2);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

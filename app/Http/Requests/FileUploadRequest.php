@@ -24,7 +24,7 @@ class FileUploadRequest extends ParentRequest
     public function rules()
     {
         return [
-            'document' => 'required|mimes:jpg,png,jpeg,doc,docx,pdf,xls,ods,cvs,xlsx|max:2000'
+            'document' => 'required|mimes:jpg,png,jpeg,doc,docx,pdf,xls,ods,csv,xlsx|max:2000'
         ];
     }
 }

@@ -14,14 +14,14 @@ class CreateMateriality
         $this->createOverallMateriality($request, $companyId, $planningId);
         $this->createPerformanceMateriality($request, $companyId, $planningId);
         $this->createPostingThreshold($request, $companyId, $planningId);
-        $materialities = Materiality::with('level:id,name,type')->where('planning_id', $planningId)->get(['id', 'materiality_level_id', 'planning_id', 'company_id', 'limit', 'amount', 'reason']);
+        $materialities = Materiality::with('level:id,name')->where('planning_id', $planningId)->get(['id', 'materiality_level_id', 'planning_id', 'company_id', 'limit', 'amount', 'reason']);
         return ['benchmark' => $benchmark, 'materialities' => $materialities];
     }
 
     private function createMaterialityBenchmark($request, $companyId, $planningId)
     {
         return MaterialityBenchmark::updateOrCreate(
-            ['planning_id' => $planningId, 'company_id' => $companyId],
+            ['planning_id' => $planningId, 'company_id' => $companyId, 'range_id' => $request->materiality_benchmark_range_id],
             ['amount' => $request->materiality_benchmark_amount, 'reason' => $request->materiality_benchmark_reason]
         );
     }

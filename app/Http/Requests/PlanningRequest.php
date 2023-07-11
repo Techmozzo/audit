@@ -26,7 +26,15 @@ class PlanningRequest extends ParentRequest
             'classes' => 'required|array',
             'classes.*' => 'required|array|distinct',
             'classes.*.name' => 'required|string',
-            'classes.*.process_flow_document' => 'required'
+            'classes.*.process_flow_document' => 'required|string',
+            'classes.*.work_through' => 'nullable',
+            'classes.*.procedures' => 'required|array',
+            'classes.*.procedures.*' => 'required|array',
+            'classes.*.procedures.*.name' => 'required|string',
+            'classes.*.procedures.*.description' => 'required|string',
+            'classes.*.procedures.*.description' => 'required|string',
+            'classes.*.procedures.*.assertions' => 'required|array',
+            'classes.*.procedures.*.assertions.*' => 'required|numeric',
         ];
     }
 }

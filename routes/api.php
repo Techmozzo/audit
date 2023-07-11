@@ -31,6 +31,7 @@ use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TransactionTestController;
+use App\Http\Controllers\TrialBalanceController;
 use App\Http\Controllers\UsersController;
 
 /*
@@ -160,6 +161,8 @@ Route::group(['middleware' => ['auth', 'api']], function () {
         Route::get('/read', [NotificationController::class, 'read']);
         Route::get('/read-all', [NotificationController::class, 'readAll']);
     });
+
+    Route::post('/trial-balance', [TrialBalanceController::class, 'upload']);
 });
 
 Route::group(['middleware' => ['auth', 'role:staff|managing_partner']], function () {

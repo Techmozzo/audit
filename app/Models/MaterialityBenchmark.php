@@ -10,5 +10,10 @@ class MaterialityBenchmark extends Model
     use HasFactory;
 
     protected $guard = [];
-    protected $fillable = ['planning_id', 'company_id', 'amount', 'reason'];
+
+    protected $fillable = ['planning_id', 'company_id', 'amount', 'reason', 'range_id'];
+
+    public function materialityRange(){
+        return $this->belongsTo(MaterialityRange::class, 'range_id');
+    }
 }

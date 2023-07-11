@@ -9,5 +9,5 @@ class MaterialityLevel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','type','lower_limit','upper_limit','description'];
+    protected $fillable = ['name','lower_limit','upper_limit','description'];
 }

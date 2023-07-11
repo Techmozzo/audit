@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class TransactionTestRequest extends ParentRequest
+class TrialBalanceUploadRequest extends ParentRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class TransactionTestRequest extends ParentRequest
     public function rules()
     {
         return [
-            'test_name' => 'required|string',
-            'test_procedures' => 'required|array',
-            'test_procedures.*' => 'required|array',
-            'test_procedures.*.description' => 'required|string',
+            'trial_balance' => 'required|mimes:xls,xlsx|max:2000'
         ];
     }
 }
