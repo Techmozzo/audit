@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             EngagementTeamRoleSeeder::class,
             MaterialityLevelSeeder::class,
             MaterialityRangeSeeder::class,
-            SubscriptionPackageSeeder::class
+            SubscriptionPackageSeeder::class,
+            AssertionSeeder::class
         ]);
     }
 }

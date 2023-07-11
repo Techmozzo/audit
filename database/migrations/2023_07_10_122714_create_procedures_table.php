@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionTestsTable extends Migration
+class CreateProceduresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateTransactionTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_tests', function (Blueprint $table) {
+        Schema::create('procedures', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('transaction_class_id');
             $table->foreign('transaction_class_id')->references('id')->on('transaction_classes')->onDelete('cascade');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
-            $table->longText('note')->nullable();
-            $table->string('attachment')->nullable();
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateTransactionTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaction_tests');
+        Schema::dropIfExists('procedures');
     }
 }

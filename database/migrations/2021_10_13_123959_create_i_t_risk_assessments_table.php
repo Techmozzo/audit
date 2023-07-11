@@ -22,6 +22,7 @@ class CreateITRiskAssessmentsTable extends Migration
             $table->string('name');
             $table->text('function');
             $table->text('review_performed');
+            $table->unsignedSmallInteger('status')->default(0);
             $table->timestamps();
         });
     }

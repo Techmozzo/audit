@@ -40,9 +40,9 @@ class ManagingPartnerInvitationJob implements ShouldQueue
         $subject = $this->data['company_name'] . ' Audit Invite.';
         $heading = 'Audit Invite';
         $body = $this->data['company_name']. " Has created an audit profile on Techmozzo audit and has invited you as their $this->role
-            <br/><br/><b><a href=https://techmozzo.com/invite?token=$this->token>Accept Invitation</a></b><br />
+            <br/><br/><b><a href=".env('FRONTEND_APP_URL')."/invited-user-registration/$this->token>Accept Invitation</a></b><br />
             If the button doesn't work, copy and paste the URL in your browser's address bar: <br /> <br />
-            https://techmozzo.com/invite?token=$this->token
+            ".env('FRONTEND_APP_URL')."/invited-user-registration/$this->token
             <br/><br/>Reach out to Techmozzo Support if you have any complaints or enquiries. <br/><br/> Thanks.";
         Mail::to($this->data['managing_partner_email'])->send(new SendEmail($this->data['managing_partner_name'], $subject, $heading, $body));
 

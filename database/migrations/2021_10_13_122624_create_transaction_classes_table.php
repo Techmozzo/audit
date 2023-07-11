@@ -20,7 +20,9 @@ class CreateTransactionClassesTable extends Migration
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
-            $table->string('process_flow_document');
+            $table->string('process_flow_document')->nullable();
+            $table->string('work_through')->nullable();
+            $table->string('risk_material_misstatement')->nullable();
             $table->timestamps();
         });
     }
