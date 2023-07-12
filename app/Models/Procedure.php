@@ -9,12 +9,16 @@ class Procedure extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transaction_class_id','company_id','name','description'];
+    protected $fillable = ['transaction_class_id','company_id','name','description', 'other_info'];
 
     protected $with = ['assertions'];
 
     public function assertions(){
         return $this->belongsToMany(Assertion::class, 'procedure_assertions');
+    }
+
+    public function procedureAssertions(){
+        return $this->hasMany(ProcedureAssertion::class, 'procedure_id');
     }
 
 }

@@ -124,11 +124,10 @@ Route::group(['middleware' => ['auth', 'api']], function () {
     // Planning
     Route::resource('engagements/{engagementId}/plannings', PlanningController::class);
     Route::post('plannings/{planningId}/materialities', [MaterialityController::class, 'store']);
-    Route::post('transaction-classes/{classId}/tests', [TransactionTestController::class, 'store']);
-
 
     // Execution
-    Route::resource('engagements/{engagementId}/executions', ExecutionController::class);
+    Route::post('procedures', [ExecutionController::class, 'majorProcedure']);
+    Route::post('engagements/{engagementId}/executions', [ExecutionController::class, 'minorProcedure']);
 
     // Conclusions
     Route::resource('engagements/{engagementId}/conclusions', ConclusionController::class);

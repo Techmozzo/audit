@@ -18,42 +18,11 @@ class CreateClient
             'is_public_entity' => $request->is_public_entity,
             'nature_of_business' => $request->nature_of_business,
         ]);
-        // if(isset($request->director_name)) $this->storeDirector($client, $request);
-        // if(isset($request->group_name)) $this->storeGroup($client, $request);
 
         if(isset($request->directors)) $this->storeDirector($client, $request);
         if(isset($request->groups)) $this->storeGroup($client, $request);
         return $client;
     }
-
-    // private function storeDirector($client, $request)
-    // {
-    //     foreach ($request->director_name as $key => $name) {
-    //         $client->directors()->create([
-    //             'company_id' => $client->company_id,
-    //             'client_id' => $client->client_id,
-    //             'name' => $name,
-    //             'units_held' => $request->director_units_held[$key] ?? null,
-    //             'designation' => $request->director_designation[$key]
-    //         ]);
-    //     }
-    // }
-
-    // private function storeGroup($client, $request)
-    // {
-    //     foreach ($request->group_name as $key => $name) {
-    //         $client->groups()->create([
-    //             'company_id' => $client->company_id,
-    //             'client_id' => $client->client_id,
-    //             'name' => $name,
-    //             'percentage_holding' => $request->group_percentage_holding[$key],
-    //             'industry' => $request->group_industry[$key],
-    //             'type' => $request->group_type[$key]
-    //         ]);
-    //     }
-    // }
-
-
 
     private function storeDirector($client, $request)
     {
