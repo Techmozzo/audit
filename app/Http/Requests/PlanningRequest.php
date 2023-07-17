@@ -34,7 +34,7 @@ class PlanningRequest extends ParentRequest
             'classes.*.procedures.*.description' => 'required|string',
             'classes.*.procedures.*.description' => 'required|string',
             'classes.*.procedures.*.assertions' => 'required|array',
-            'classes.*.procedures.*.assertions.*' => 'required|numeric',
+            'classes.*.procedures.*.assertions.*' => 'required|integer|exists:assertions,id',
         ];
     }
 }

@@ -11,8 +11,11 @@ class Assertion extends Model
 
     protected $fillable = ['id', 'name', 'description'];
 
+    protected $hidden = ['pivot'];
+
+
     public function procedures(){
         return $this->belongsToMany(Procedure::class, 'procedure_assertions');
     }
-    
+
 }

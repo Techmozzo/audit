@@ -11,8 +11,6 @@ class Procedure extends Model
 
     protected $fillable = ['transaction_class_id','company_id','name','description', 'other_info'];
 
-    protected $with = ['assertions'];
-
     public function assertions(){
         return $this->belongsToMany(Assertion::class, 'procedure_assertions');
     }

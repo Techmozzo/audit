@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assertion;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AssertionController extends Controller
 {
@@ -14,7 +15,8 @@ class AssertionController extends Controller
      */
     public function index()
     {
-        //
+        $assertions = Assertion::select('id','name')->get();
+        return response()->success(Response::HTTP_OK, 'Request Successful', ['assertions' => $assertions]);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\AssertionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -30,7 +31,6 @@ use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\MaterialityController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\TransactionTestController;
 use App\Http\Controllers\TrialBalanceController;
 use App\Http\Controllers\UsersController;
 
@@ -135,7 +135,6 @@ Route::group(['middleware' => ['auth', 'api']], function () {
     // Approve Engagement Stages
     Route::get('engagements/{engagementId}/approve', [EngagementApprovalController::class, 'approve']);
 
-
     // Engagement Invite
     Route::post('engagements/{engagementId}/send-invite', [EngagementInviteController::class, 'send']);
 
@@ -162,6 +161,9 @@ Route::group(['middleware' => ['auth', 'api']], function () {
     });
 
     Route::post('/trial-balance', [TrialBalanceController::class, 'upload']);
+
+    Route::get('/assertions', [AssertionController::class, 'index']);
+
 });
 
 Route::group(['middleware' => ['auth', 'role:staff|managing_partner']], function () {

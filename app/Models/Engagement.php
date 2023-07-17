@@ -24,7 +24,9 @@ class Engagement extends Model
     }
 
     public function planning(){
-        return $this->hasOne(Planning::class);
+        return $this->hasOne(Planning::class)->with(['transactionClass.procedures.assertions' => function($query){
+            $query->join('assertions as A', 'A.id', '=', 'procedure_assertions.assertion_id')->addSelect('A.id', 'A.name', 'procedure_assertions.value');
+        }]);
     }
 
     public function execution(){
