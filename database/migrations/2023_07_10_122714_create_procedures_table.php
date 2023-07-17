@@ -20,7 +20,8 @@ class CreateProceduresTable extends Migration
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
+            $table->text('other_info')->nullable();
             $table->timestamps();
         });
     }

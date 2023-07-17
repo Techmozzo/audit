@@ -20,7 +20,7 @@ class CreateMaterialityBenchmarksTable extends Migration
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->unsignedInteger('range_id');
-            $table->foreign('range_id')->references('id')->on('materiality_benchmarks');
+            $table->foreign('range_id')->references('id')->on('materiality_ranges');
             $table->decimal('amount', 17, 2);
             $table->string('reason');
             $table->timestamps();
